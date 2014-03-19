@@ -1,0 +1,102 @@
+body
+{
+    background: url('images/fond_jaune.png');
+    font-family: 'Trebuchet MS', Arial, sans-serif;
+    color: #181818;
+}
+
+
+#contenaire
+{
+    width: 900px;
+    margin: auto;
+}
+
+header {
+
+}
+header #titre {
+	width: 300px;
+	height: 125px;
+	float: left;
+	margin: 0px;
+
+}
+
+header h1 {
+	margin:10px 5px 5px 0px;
+	font-size: 4.0em;
+}
+header h2 {
+	
+	margin:5px 5px 5px 20px;
+	color: grey;
+}
+
+header nav {
+	width: 600px;
+	float: left;
+	padding-top: 75px;
+	margin: auto;
+   display: inline-block;
+}
+
+header nav ul
+{
+    list-style-type: none;
+}
+
+header nav li
+{
+    display: inline-block;
+    margin-right: 15px;
+}
+
+header nav a
+{
+    font-size: 1.3em;
+    color: #181818;
+    padding-bottom: 3px;
+    text-decoration: none;
+}
+
+header nav a:hover
+{
+    color: #760001;
+    border-bottom: 3px solid #760001;
+}
+
+header nav .select
+{
+    color: #760001;
+    border-bottom: 3px solid #760001;
+}
+
+section {
+	width: 900px;
+	float: left;
+	margin-top: 25px;
+}
+
+
+/* Catalogue */
+section #c1 {
+	float: left;
+	width: 438px;
+	border: solid 1px black;
+	padding: 10px 5px 10px 5px;
+
+}
+
+section #c2 {
+	float: left;
+	width: 438px;
+	border: solid 1px black;
+	padding: 10px 5px 10px 5px;
+
+}
+
+
+
+
+
