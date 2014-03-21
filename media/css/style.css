@@ -17,7 +17,15 @@ div#contenaire {
 
 header {
 display: block;
- color:white;
+
+background: #fff;
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 7px #000000;
+-webkit-box-shadow: 0px 0px 7px #000000;
+box-shadow: 0px 0px 7px #000000;
 }
 
 header #titre {
@@ -29,13 +37,13 @@ header #titre {
 }
 
 header h1 {
-	margin:10px 5px 5px 0px;
+	margin:10px 5px 5px 10px;
 	font-size: 4.0em;
 }
 header h2 {
 	
-	margin:5px 5px 5px 20px;
-	color: grey;
+	margin:5px 5px 5px 30px;
+	color: #505050;
 }
 
 header nav {
@@ -80,7 +88,15 @@ section {
 	width: 900px;
 	margin-top: 25px;
 	display: block;
-    background-color: #fff;
+    background-color: #F5F2EF;
+
+-moz-border-radius: 9px;
+-webkit-border-radius: 9px;
+border-radius: 9px;
+/*IE 7 AND 8 DO NOT SUPPORT BORDER RADIUS*/
+-moz-box-shadow: 0px 0px 7px #000000;
+-webkit-box-shadow: 0px 0px 7px #000000;
+box-shadow: 0px 0px 7px #000000;
 }
 
 
@@ -88,7 +104,6 @@ section {
 section #c1 {
     display: inline-block;
     width: 435px;
-	border: solid 1px black;
 	padding: 10px 5px 10px 5px;
 vertical-align: top;
 }
@@ -96,12 +111,13 @@ vertical-align: top;
 section #c2 {
     display: inline-block;
 	width: 435px;
-	border: solid 1px black;
 	padding: 10px 5px 10px 5px;
 	vertical-align: top;
 }
 
-
+section h2 {
+	margin-left: 20px;
+}
 
 
 
@@ -111,9 +127,12 @@ ul#results {
 }
 ul#results li {
 	padding:5px 5px 5px 5px;
+	margin:2px 0 2px 0;
 	width: 423px;
-	border:solid 1px black;
 	float:left;
+	cursor: pointer;
+
+   border: 1px solid #c9b7a2;
 }
 
 
@@ -131,15 +150,23 @@ ul#results li .album{
 	padding-left: 5px;
 	color:grey;
 }
+ul#results li .artist
+{
 
+   font-style:italic;
+}
 
+ul#results li:hover{
+	padding:5px 5px 5px 5px;
 
-
+	border:solid 1px #c9b7a2;
+	background: #FFF6EC;
+}
 
 
 .form-field {
    border: 1px solid #c9b7a2;
-   background: #e4d5c3;
+   background: #FFF6EC;
    -webkit-border-radius: 4px;
    -moz-border-radius: 4px;
    border-radius: 4px;
@@ -155,3 +182,5 @@ ul#results li .album{
    background: #fff;
    color: #725129;
    }
+
+

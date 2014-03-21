@@ -31,7 +31,7 @@
 	<section>
 		<div id="c1">
 			<h2>Ajouter des musique</h2>
-			<input type="text" class="form-field" id="search" name="search" onkeypress="search();" placeholder="Rechercher"/>
+			<input type="text" class="form-field" id="search" onkeyup="search();" placeholder="Rechercher" autocomplete="off"/>
 			<ul id="results">
 				<li>
 					<img width="80" height="80" class="inline" id="cover_image" src="https://api.deezer.com/album/4491721/image" style="opacity: 1;">
@@ -43,6 +43,7 @@
 					<img width="80" height="80" class="inline" id="cover_image" src="https://api.deezer.com/album/4491721/image" style="opacity: 1;">
 					<span class="titre">Je N'veux Pas Rester Sage</span>
 					<span class="album">1er Album</span>
+					de
 				</li>
 			</ul>
 			
@@ -59,16 +60,22 @@
 </div>
 	<script>
 		DZ.init({
-			appId  : '122865',
-			channelUrl : 'http://external.codecademy.com/channel.html',
+			appId  : '134001',
+			channelUrl : 'channel.php',
 		});
 
         function search(){
-            DZ.api('/search?q='+$('#search').val(), function(json){
+        	var search = $('#search').val();
+            DZ.api('/search?q='+search, function(json){
             	$('#results').text("");
 				for (var i=0, len = json.data.length; i<len ; i++)
 				{
-			      $('#results').append('<li>' + json.data[i].title + ' - ' + json.data[i].album.title + '</li>');
+			      $('#results').append('<li>' + 
+			      	'<img width="80" height="80" class="inline" id="cover_image" src="'+json.data[i].album.cover+'" style="opacity: 1;">'+
+			      	'<span class="titre">'+json.data[i].title+'</span>' +
+			      	'<span class="album">'+json.data[i].album.title+'</span> de ' +
+			      	'<span class="artist">'+json.data[i].artist.name+'</span>'
+					);
 				}
 			});
         }
