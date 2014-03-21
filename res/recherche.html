@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+	
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
+</head>
+
+<body>
+	<div id="dz-root"></div>
+	
+	<input type="button" onclick="search();" value="Search"/>
+	<ul id="results">
+	</ul>
+	
+	<script>
+		DZ.init({
+			appId  : '122865',
+			channelUrl : 'http://external.codecademy.com/channel.html',
+		});
+
+        function search(){
+            DZ.api('/search?q=the doors', function(json){
+				for (var i=0, len = json.data.length; i<len ; i++)
+				{
+			      $('#results').append('<li>' + json.data[i].title + ' - ' + json.data[i].album.title + '</li>');
+				}
+			});
+        }
+	</script>
+</body>
+</html>
