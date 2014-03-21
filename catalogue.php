@@ -5,6 +5,7 @@
 	<title>TW2 - Projet</title>
 	<link rel="stylesheet" type="text/css" href="media/css/style.css">
 
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 	<script src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -30,7 +31,7 @@
 	<section>
 		<div id="c1">
 			<h2>Ajouter des musique</h2>
-			<input type="text" id="search" name="search" onkeypress="search();"/>
+			<input type="text" class="form-field" id="search" name="search" onkeypress="search();" placeholder="Rechercher"/>
 			<ul id="results">
 				<li>
 					<img width="80" height="80" class="inline" id="cover_image" src="https://api.deezer.com/album/4491721/image" style="opacity: 1;">
@@ -64,7 +65,7 @@
 
         function search(){
             DZ.api('/search?q='+$('#search').val(), function(json){
-            	$('#results').text("Chargement ... !");
+            	$('#results').text("");
 				for (var i=0, len = json.data.length; i<len ; i++)
 				{
 			      $('#results').append('<li>' + json.data[i].title + ' - ' + json.data[i].album.title + '</li>');

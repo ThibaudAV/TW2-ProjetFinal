@@ -98,7 +98,7 @@ section #c2 {
 	width: 435px;
 	border: solid 1px black;
 	padding: 10px 5px 10px 5px;
-vertical-align: top;
+	vertical-align: top;
 }
 
 
@@ -137,3 +137,21 @@ ul#results li .album{
 
 
 
+.form-field {
+   border: 1px solid #c9b7a2;
+   background: #e4d5c3;
+   -webkit-border-radius: 4px;
+   -moz-border-radius: 4px;
+   border-radius: 4px;
+   color: #c9b7a2;
+   -webkit-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   -moz-box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   box-shadow: rgba(255,255,255,0.4) 0 1px 0, inset rgba(000,000,000,0.7) 0 0px 0px;
+   padding:8px;
+   margin-bottom:20px;
+   width:418px; 
+   }
+.form-field:focus {
+   background: #fff;
+   color: #725129;
+   }
