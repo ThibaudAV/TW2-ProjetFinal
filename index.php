@@ -28,7 +28,7 @@
 	<header>
 		<div id="titre">
 			<h1>MyPlay</h1>
-			<h2>Créé vos playlists </h2>
+			<h2>Créé vos playlists ... </h2>
 		</div>
  
 		<nav>
