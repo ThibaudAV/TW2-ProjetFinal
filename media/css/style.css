@@ -66,7 +66,7 @@ header nav li
 
 header nav a
 {
-    font-size: 1.3em;
+    font-size: 1.5em;
     color: #181818;
     padding-bottom: 3px;
     text-decoration: none;
@@ -74,7 +74,7 @@ header nav a
 
 header nav a:hover
 {
-    color: #760001;
+    color: #A98950;
     border-bottom: 3px solid #760001;
 }
 
