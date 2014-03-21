@@ -1,24 +1,29 @@
 body
 {
-    background: url('images/fond_jaune.png');
+    background: url('../images/webtreats_light_wood1.jpg');
     font-family: 'Trebuchet MS', Arial, sans-serif;
     color: #181818;
 }
 
 
-#contenaire
-{
+div#contenaire {
+	display: block;
+
     width: 900px;
-    margin: auto;
+
+    margin: auto ;
+
 }
 
 header {
-
+display: block;
+ color:white;
 }
+
 header #titre {
 	width: 300px;
 	height: 125px;
-	float: left;
+	display: inline-block;
 	margin: 0px;
 
 }
@@ -34,8 +39,7 @@ header h2 {
 }
 
 header nav {
-	width: 600px;
-	float: left;
+	width: 595px;
 	padding-top: 75px;
 	margin: auto;
    display: inline-block;
@@ -74,27 +78,60 @@ header nav .select
 
 section {
 	width: 900px;
-	float: left;
 	margin-top: 25px;
+	display: block;
+    background-color: #fff;
 }
 
 
 /* Catalogue */
 section #c1 {
-	float: left;
-	width: 438px;
+    display: inline-block;
+    width: 435px;
 	border: solid 1px black;
 	padding: 10px 5px 10px 5px;
-
+vertical-align: top;
 }
 
 section #c2 {
-	float: left;
-	width: 438px;
+    display: inline-block;
+	width: 435px;
 	border: solid 1px black;
 	padding: 10px 5px 10px 5px;
-
+vertical-align: top;
 }
+
+
+
+
+
+ul#results {
+	list-style-type: none;
+	padding: 0px;
+}
+ul#results li {
+	padding:5px 5px 5px 5px;
+	width: 423px;
+	border:solid 1px black;
+	float:left;
+}
+
+
+ul#results li img{
+	float:left;
+	margin: 2px;
+	padding: 0px;
+}
+ul#results li .titre{
+	display: block;
+	font-size: 1.2em;
+	font-weight: bold;
+}
+ul#results li .album{
+	padding-left: 5px;
+	color:grey;
+}
+
 
 
 
