@@ -17,8 +17,7 @@ div#contenaire {
 
 header {
 display: block;
-
-background: #fff;
+background-color: #F5F2EF;
 -moz-border-radius: 9px;
 -webkit-border-radius: 9px;
 border-radius: 9px;
@@ -33,7 +32,6 @@ header #titre {
 	height: 125px;
 	display: inline-block;
 	margin: 0px;
-
 }
 
 header h1 {
@@ -80,7 +78,7 @@ header nav a:hover
 
 header nav .select
 {
-    color: #760001;
+    color: #3F2202;
     border-bottom: 3px solid #760001;
 }
 
@@ -126,11 +124,10 @@ ul#results {
 	padding: 0px;
 }
 ul#results li {
-	padding:5px 5px 5px 5px;
-	margin:2px 0 2px 0;
-	width: 423px;
+	position:relative;
+	margin:2px 0 5px 0;
+	width: 435px;
 	float:left;
-	cursor: pointer;
 
    border: 1px solid #c9b7a2;
 }
@@ -145,9 +142,10 @@ ul#results li .titre{
 	display: block;
 	font-size: 1.2em;
 	font-weight: bold;
+	margin-left: -5px;
+
 }
 ul#results li .album{
-	padding-left: 5px;
 	color:grey;
 }
 ul#results li .artist
@@ -157,10 +155,56 @@ ul#results li .artist
 }
 
 ul#results li:hover{
-	padding:5px 5px 5px 5px;
-
 	border:solid 1px #c9b7a2;
 	background: #FFF6EC;
+}
+
+ul#results li .miniPlayer {
+	width: 80px;
+	height:60px;
+	float:left;
+	margin: 2px 2px 2px -82px;
+	padding: 20px 0 0 0px;
+	text-align: center;
+	font-size: 1em;
+}
+ul#results li .miniPlayer.on {
+	color:#F2873B;
+	opacity: 0.8;
+}
+ul#results li .miniPlayer.on:hover {
+	opacity: 1;
+	background: none;
+}
+ul#results li .addCatalogue{
+
+	padding:5px 5px 5px 10px;
+	cursor: pointer;
+    display: inline-block;
+    width: 336px;
+    min-height: 72px
+}
+
+ul#results li .addCatalogue:hover:after{
+  content: "";
+   /*display: block;*/
+   position: absolute;
+   width: 20px;
+   height: 100%;
+   /*float: right;*/
+   right: -10px;
+   top:0;
+	opacity: 1;
+
+	vertical-align: middle;
+	text-align: center;
+	/*line-height: 90px;*/
+   /*background-color:black;*/
+   background-image: url("../images/addRight.png");
+   background-position: center center;
+   background-repeat:no-repeat;
+	background-size:100% 100%;
+
 }
 
 
