@@ -42,6 +42,7 @@
 			<h2>Ajouter des musique</h2>
 			<input type="text" class="form-field" id="search" onkeyup="search();" placeholder="Rechercher" autocomplete="off" disabled/>
 			<ul id="results">
+				Taper votre recherche
 			</ul>
 			
 		</div>
