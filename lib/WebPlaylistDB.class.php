@@ -2,36 +2,70 @@
 
 
 include("Playlist.class.php");
-include("Catalogue.class.php");
+// include("Catalogue.class.php");
 include("Track.class.php");
+include("Like.class.php");
 
 
 class WebPlaylistDB {
 
     const DB_SERVER   = "localhost";
     const DB_USER     = "root";
-    const DB_PASSWORD = "root";
-    const DB_NAME     = "WebPlayerDB";
+    const DB_PASSWORD = "aout91";
+    const DB_NAME     = "WebPlaylistDB";
     
     var $db;
 
     public function __construct() {
 
-        $this->db = new mysqli(self::DB_SERVER, self::DB_USER, self::DB_PASSWORD, self::DB_NAME)
-            or die("MySQL connection failure: " . $this->db->connect_error);;
+        // $this->db = new mysqli(self::DB_SERVER, self::DB_USER, self::DB_PASSWORD, self::DB_NAME)
+        //     or die("MySQL connection failure: " . $this->db->connect_error);;
+
+        try
+        {
+            $this->db = new PDO('mysql:host='.self::DB_SERVER.';dbname='.self::DB_NAME, self::DB_USER, self::DB_PASSWORD);
+        }
+        catch (Exception $e)
+        {
+            die('Erreur : ' . $e->getMessage());
+        }
+
 
     } // constructor
     
 
 
-    function getCatalogue() {
+    public function getTracks() {
+        $tracks = array();
 
+        $reponse = $this->db->query("SELECT * FROM tracks");
+        while ($row = $reponse->fetch())
+        {
+            $track = new Track(null, null, null);
+            $track->init($row['id'], $row['deezerID'], $row['titre'], $row['preview']);
+            array_push($tracks, $track);
+        }
+        return $tracks;
     }
+    public function addTrack($deezerID,$titre,$preview)
+    {
+        $req = $this->db->prepare('INSERT INTO tracks(deezerID, titre, preview) VALUES(:deezerID, :titre, :preview)');
+        $req->execute(array(
+            'deezerID' => $deezerID,
+            'titre' => $titre,
+            'preview' => $preview
+            ));
+    }
+    public function removeTrack($id)
+    {
+        $this->db->exec("DELETE FROM tracks WHERE id = '".$id."'");
+    }
+    
 
 
 
 
-
+/*
 
 
 
@@ -127,6 +161,6 @@ class WebPlaylistDB {
     function removeTrack() { } // function
 
     function updateTrack() { } // function
-    
+    */
     
 } // class

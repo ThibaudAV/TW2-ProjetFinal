@@ -4,6 +4,7 @@
 	<meta charset="utf-8">
 	<title>TW2 - Projet</title>
 	<link rel="stylesheet" type="text/css" href="media/css/style.css">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
@@ -27,7 +28,7 @@
 	
 	<header>
 		<div id="titre">
-			<h1>MyPlay</h1>
+			<h1><i class="fa fa-music"></i> MyPlay</h1>
 			<h2>Créé vos playlists</h2>
 		</div>
  

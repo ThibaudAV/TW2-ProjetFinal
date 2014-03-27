@@ -7,7 +7,7 @@ class Catalogue {
 
     var $tracks;
 
-    function init($ID, $title) {
+    function init($ID) {
 
         $this->ID = $ID;
 

@@ -5,22 +5,22 @@ class Track {
     
     var $ID;
     var $deezerID;
-    var $title;
+    var $titre;
     var $preview;
 
-    public function __construct($deezerID, $title, $preview) {
+    public function __construct($deezerID, $titre, $preview) {
 
         $this->deezerID = $deezerID;
-        $this->title = $title;
+        $this->titre = $titre;
         $this->preview = $preview;
 
     } // constructor
 
-    function init($ID, $deezerID, $title, $preview) {
+    function init($ID, $deezerID, $titre, $preview) {
 
         $this->ID = $ID;
         $this->deezerID = $deezerID;
-        $this->title = $title;
+        $this->titre = $titre;
         $this->preview = $preview;
 
     } // function

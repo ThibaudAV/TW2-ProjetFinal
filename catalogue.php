@@ -1,3 +1,12 @@
+<?php
+
+	include("lib/WebPlaylistDB.class.php");
+
+	$db = new WebPlaylistDB();
+
+
+
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -22,39 +31,28 @@
 		</div>
  
 		<nav>
-	        <ul>
-	            <li><a href="index.php">Playlist</a></li>
-	            <li><a href="catalogue.php" class="select">Catalogue</a></li>
-	        </ul>
-	    </nav>
+			<ul>
+				<li><a href="index.php">Playlist</a></li>
+				<li><a href="catalogue.php" class="select">Catalogue</a></li>
+			</ul>
+		</nav>
 	</header>
 	<section>
 		<div id="c1">
 			<h2>Ajouter des musique</h2>
-			<input type="text" class="form-field" id="search" onkeyup="search();" placeholder="Rechercher" autocomplete="off"/>
+			<input type="text" class="form-field" id="search" onkeyup="search();" placeholder="Rechercher" autocomplete="off" disabled/>
 			<ul id="results">
-				<li onmouseover="">
-					<img width="80" height="80" class="inline" id="cover_image" src="https://api.deezer.com/album/4491721/image" style="opacity: 1;">
-					<div class="miniPlayer">
-						<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>
-					</div>
-					<span class="titre">Je N'veux Pas </span>
-					<span class="album">1er Album</span>
-
-				</li>
-
-				<li onclick="">
-					<img width="80" height="80" class="inline" id="cover_image" src="https://api.deezer.com/album/4491721/image" style="opacity: 1;">
-					<span class="titre">Je N'veux Pas Rester Sage</span>
-					<span class="album">1er Album</span>
-					de
-				</li>
 			</ul>
 			
 		</div>
 		<div id="c2">
 			<h2>Mon Catalogue</h2>
-			
+			<?php
+				$tracks = $db->getTracks();
+				while( $track = array_pop($tracks) ) {
+					echo $track->titre."<br>";
+				}
+			?>
 		</div>
 
 	</section>
@@ -62,86 +60,125 @@
 
 
 </div>
-	<script>
+<script>
 
 		function initDivMP () {
-			$( "div.miniPlayer.on" ).on({
-				   mouseenter: function() {
-					  $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
-				  }, mouseleave: function() {
-					  $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-				  }
-				});
-				$( "div.miniPlayer:not('.on')" ).on({
-				   mouseenter: function() {
-					  $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-				  }, mouseleave: function() {
-					  $(this).html('');
-				  }
+			
+
+			$( "div.miniPlayer" ).on({
+				mouseenter: function() {
+					var track = $( this ).attr("data-id");
+					console.log("miniPlayer mouseenter");
+					if(DZ.player.getCurrentTrack()){
+						if(DZ.player.getCurrentTrack().id == track) {
+							// $(this).addClass('on');
+							if(DZ.player.isPlaying())
+							{
+								$(this).find("i.fa-play").removeClass('fa-play').addClass('fa-pause');
+								// $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
+							} else {
+								$(this).find("i.fa-pause").removeClass('fa-pause').addClass('fa-play');
+								// $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
+							}
+						} else {
+								// $(this).find("i.fa-play").removeClass('fa-pause').addClass('fa-play');
+							$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
+						}
+					} else {
+								// $(this).find("i.fa-play").removeClass('fa-pause').addClass('fa-play');
+						$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
+					}
+				},mouseleave: function() {
+					var track = $( this ).attr("data-id");
+					console.log("miniPlayer mouseleave");
+					if(DZ.player.getCurrentTrack()){
+						if(DZ.player.getCurrentTrack().id == track) {
+							if(DZ.player.isPlaying())
+							{
+								$(this).find("i.fa-pause").removeClass('fa-pause').addClass('fa-play');
+								// $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
+							} else {
+								$(this).find("i.fa-play").removeClass('fa-play').addClass('fa-pause');
+								
+								// $(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
+							}
+						} else {
+							$(this).html('');
+						}
+					} else {
+						$(this).html('');
+					}
+				},'click': function(){
+					var track = $( this ).attr("data-id");
+					// playOnClick($( this ).attr("data-id"));
+					console.log("miniPlayer click");
+
+					if(DZ.player.getCurrentTrack()){
+						if(DZ.player.getCurrentTrack().id == track) {
+							if(DZ.player.isPlaying())
+							{
+								DZ.player.pause();
+								$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
+							} else {
+								DZ.player.play();
+								$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
+							}
+						} else {
+							$( "div.miniPlayer" ).html('');
+							$('.miniPlayer').removeClass('on');
+							$(this).addClass('on');
+							DZ.player.playTracks([track]);
+							$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
+						}
+					} else {
+						$( "div.miniPlayer" ).html('');
+						$('.miniPlayer').removeClass('on');
+						$(this).addClass('on');
+						DZ.player.playTracks([track]);
+						$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
+					}
+				}
+			});
+				// $( "div.miniPlayer" ).click(function() {
+					
+				// });
+				
+				$( ".addCatalogue" ).click(function() {
+					var track_id = $( this ).attr("data-id");
+					var track_titre = $( this ).attr("data-titre");
+					
 				});
 		}
 
-        function search(){
-        	var search = $('#search').val();
-            DZ.api('/search?q='+search, function(json){
-            	$('#results').text("");
+
+		function search(){
+			var search = $('#search').val();
+			DZ.api('/search?q='+search, function(json){
+				$('#results').text("");
 				for (var i=0, len = json.data.length; i<len ; i++)
 				{
-			      $('#results').append('<li>' + 
-			      	'<img width="80" height="80" class="inline" id="cover_image" src="'+json.data[i].album.cover+'" style="opacity: 1;">'+
-			      	'<div onclick="playOnClick('+json.data[i].id+'); return false;" class="miniPlayer" id="idMP_'+json.data[i].id+'"> '+
-			      	''+
-			      	'</div><div class="addCatalogue">' +
-			      	'<span class="titre">'+json.data[i].title+'</span>' +
-			      	'<span class="album">'+json.data[i].album.title+'</span> de ' +
-			      	'<span class="artist">'+json.data[i].artist.name+'</span></div>'
+				  $('#results').append('<li>' + 
+					'<img width="80" height="80" class="inline" id="cover_image" src="'+json.data[i].album.cover+'" style="opacity: 1;">'+
+					'<div data-id="'+json.data[i].id+'" class="miniPlayer" id="idMP_'+json.data[i].id+'"> '+
+					''+
+					'</div><div class="addCatalogue" data-id="'+json.data[i].title+'" data-titre="'+json.data[i].title+'">' +
+					'<span class="titre">'+json.data[i].title+'</span>' +
+					'<span class="album">'+json.data[i].album.title+'</span> de ' +
+					'<span class="artist">'+json.data[i].artist.name+'</span></div>'
 					);
-			      DZ.player.pause();
-			      initDivMP();
+				  DZ.player.pause();
 				}
+				initDivMP();
 			});
 
-        }
-        function playOnClick (track) {
-        	var newPlay=false;
-        	if(DZ.player.getCurrentTrack()){
-		        if(DZ.player.getCurrentTrack().id == track) {
-		        	console.log(DZ.player.isPlaying());
-		        	if(DZ.player.isPlaying())
-		        	{
-		        		DZ.player.pause();
-		        	}
-		        	else 
-		        	{
-		        		DZ.player.play();
-		        	}
-		        } else {
-		        	newPlay=true;
-		        }
-        	} else {
-        		newPlay=true;
-        	}
-
-			if (newPlay) {
-	        		DZ.player.playTracks([track]);
-
-	        	$('.miniPlayer').html('');
-	        	$('.miniPlayer').removeClass('on');
-
-	        	$('#idMP_'+track).addClass('on');
-	        	$('#idMP_'+track).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-	    
-	        	initDivMP();
-			};
-
-        }
+		}
 
 		DZ.init({
 			appId  : '134001',
 			channelUrl : 'channel.php',
 			player : {
 				onload : function(){
-
+					$("input#search").attr('disabled', false);
 				}
 			}
 		});

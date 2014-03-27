@@ -28,10 +28,10 @@ box-shadow: 0px 0px 7px #000000;
 }
 
 header #titre {
-	width: 300px;
+	width: 320px;
 	height: 125px;
 	display: inline-block;
-	margin: 0px;
+	margin: 0px 0 0 10px;
 }
 
 header h1 {
@@ -45,7 +45,7 @@ header h2 {
 }
 
 header nav {
-	width: 595px;
+	width: 565px;
 	padding-top: 75px;
 	margin: auto;
    display: inline-block;
