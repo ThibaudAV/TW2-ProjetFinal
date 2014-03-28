@@ -167,6 +167,7 @@ ul#results li .miniPlayer {
 	padding: 20px 0 0 0px;
 	text-align: center;
 	font-size: 1em;
+	cursor: pointer;
 }
 ul#results li .miniPlayer.on {
 	color:#F2873B;
@@ -206,6 +207,91 @@ ul#results li .addCatalogue:hover:after{
 	background-size:100% 100%;
 
 }
+
+
+ul#catalogues {
+	list-style-type: none;
+	padding: 0px;
+}
+ul#catalogues li {
+	position:relative;
+	margin:2px 0 5px 0;
+	width: 435px;
+	float:left;
+
+   border: 1px solid #c9b7a2;
+}
+
+
+ul#catalogues li img{
+	float:left;
+	margin: 2px;
+	padding: 0px;
+}
+ul#catalogues li .titre{
+	display: block;
+	font-size: 1.2em;
+	font-weight: bold;
+	margin-left: -5px;
+
+}
+ul#catalogues li .album{
+	color:grey;
+}
+ul#catalogues li .artist
+{
+
+   font-style:italic;
+}
+
+ul#catalogues li:hover{
+	border:solid 1px #c9b7a2;
+	background: #FFF6EC;
+}
+
+ul#catalogues li .miniPlayer {
+	width: 80px;
+	height:60px;
+	float:left;
+	margin: 2px 2px 2px -82px;
+	padding: 20px 0 0 0px;
+	text-align: center;
+	font-size: 1em;
+}
+ul#catalogues li .miniPlayer.on {
+	color:#F2873B;
+	opacity: 0.8;
+}
+ul#catalogues li .miniPlayer.on:hover {
+	opacity: 1;
+	background: none;
+}
+ul#catalogues li .addCatalogue{
+
+	padding:5px 5px 5px 10px;
+	/*cursor: pointer;*/
+    display: inline-block;
+    width: 336px;
+    min-height: 72px
+}
+
+/*ul#catalogues li .addCatalogue:hover:after{
+  content: "";
+   position: absolute;
+   width: 20px;
+   height: 100%;
+   right: -10px;
+   top:0;
+	opacity: 1;
+
+	vertical-align: middle;
+	text-align: center;
+   background-image: url("../images/addRight.png");
+   background-position: center center;
+   background-repeat:no-repeat;
+	background-size:100% 100%;
+
+}*/
 
 
 .form-field {

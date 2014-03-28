@@ -48,12 +48,28 @@
 		</div>
 		<div id="c2">
 			<h2>Mon Catalogue</h2>
+			<ul id="catalogues">
 			<?php
 				$tracks = $db->getTracks();
 				while( $track = array_pop($tracks) ) {
-					echo $track->titre."<br>";
+					// $response = json_decode(file_get_contents("http://api.deezer.com/track/".$track->deezerID));
+					// echo $track->titre."<br>";
+					// var_dump($response);
+					echo "<li>";
+					echo '<img width="80" height="80" class="inline" id="cover_image" src="'.$track->album_cover.'" style="opacity: 1;">';
+					echo '<div data-id="'.$track->album_cover.'" class="miniPlayer" id="idMP_'.$track->deezerID.'"> ';
+					echo '</div><div class="addCatalogue" data-id="'.$track->album_cover.'">';
+					echo '<span class="titre">'.$track->titre.'</span>';
+					echo '<span class="album">'.$track->album.'</span> de ';
+					echo '<span class="artist">'.$track->artist.'</span></div>';
+					echo '<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span>';
+					echo '</li>';
+
+				
 				}
 			?>
+				
+			</ul>
 		</div>
 
 	</section>
@@ -146,8 +162,58 @@
 				
 				$( ".addCatalogue" ).click(function() {
 					var track_id = $( this ).attr("data-id");
-					var track_titre = $( this ).attr("data-titre");
+
+					DZ.api('/track/'+track_id, function(json){
+							track_titre = json.title;
+							track_preview = json.preview ;
+							track_album = json.album.title;
+							track_album_cover = json.album.cover;
+							track_artist = json.artist.name;
+
+						var jqxhr = $.post( "lib/addTrackAjax.php", { id: track_id, titre: track_titre, preview: track_preview,album: track_album,album_cover:track_album_cover,artist:track_artist }, function(res) {
+
+					//	DZ.api('/track/'+json.id, function(json){
 					
+							$('#catalogues').append('<li>' + 
+							'<img width="80" height="80" class="inline" id="cover_image" src="'+json.album.cover+'" style="opacity: 1;">'+
+							'<div data-id="'+json.id+'" class="miniPlayer" id="idMP_'+json.id+'"> '+
+							''+
+							'</div><div class="addCatalogue" data-id="'+json.title+'" data-titre="'+json.title+'" data-preview="'+json.preview+'">' +
+							'<span class="titre">'+json.title+'</span>' +
+							'<span class="album">'+json.album.title+'</span> de ' +
+							'<span class="artist">'+json.artist.name+'</span></div>'+
+							'<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span>'
+							);
+					//	});
+
+					})
+					.fail(function() {
+						alert( "error" );
+					});
+
+						});
+
+
+					// var jqxhr = $.post( "lib/addTrackAjax.php", { id: track_id, titre: track_titre, preview: track_preview }, function(json) {
+
+					// 	DZ.api('/track/'+json.id, function(json){
+					
+					// 		$('#catalogues').append('<li>' + 
+					// 		'<img width="80" height="80" class="inline" id="cover_image" src="'+json.album.cover+'" style="opacity: 1;">'+
+					// 		'<div data-id="'+json.id+'" class="miniPlayer" id="idMP_'+json.id+'"> '+
+					// 		''+
+					// 		'</div><div class="addCatalogue" data-id="'+json.title+'" data-titre="'+json.title+'" data-preview="'+json.preview+'">' +
+					// 		'<span class="titre">'+json.title+'</span>' +
+					// 		'<span class="album">'+json.album.title+'</span> de ' +
+					// 		'<span class="artist">'+json.artist.name+'</span></div>'+
+					// 		'<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-times fa-stack-1x fa-inverse"></i></span>'
+					// 		);
+					// 	});
+
+					// })
+					// .fail(function() {
+					// 	alert( "error" );
+					// });
 				});
 		}
 
@@ -162,7 +228,7 @@
 					'<img width="80" height="80" class="inline" id="cover_image" src="'+json.data[i].album.cover+'" style="opacity: 1;">'+
 					'<div data-id="'+json.data[i].id+'" class="miniPlayer" id="idMP_'+json.data[i].id+'"> '+
 					''+
-					'</div><div class="addCatalogue" data-id="'+json.data[i].title+'" data-titre="'+json.data[i].title+'">' +
+					'</div><div class="addCatalogue" data-id="'+json.data[i].id+'" data-titre="'+json.data[i].title+'" data-preview="'+json.data[i].preview+'">' +
 					'<span class="titre">'+json.data[i].title+'</span>' +
 					'<span class="album">'+json.data[i].album.title+'</span> de ' +
 					'<span class="artist">'+json.data[i].artist.name+'</span></div>'

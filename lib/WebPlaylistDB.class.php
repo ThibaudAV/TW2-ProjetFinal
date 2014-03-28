@@ -42,19 +42,23 @@ class WebPlaylistDB {
         while ($row = $reponse->fetch())
         {
             $track = new Track(null, null, null);
-            $track->init($row['id'], $row['deezerID'], $row['titre'], $row['preview']);
+            $track->init($row['id'], $row['deezerID'], $row['titre'], $row['preview'], $row['album'], $row['album_cover'], $row['artist']);
             array_push($tracks, $track);
         }
         return $tracks;
     }
-    public function addTrack($deezerID,$titre,$preview)
+    public function addTrack($deezerID,$titre,$preview,$album, $album_cover, $artist)
     {
-        $req = $this->db->prepare('INSERT INTO tracks(deezerID, titre, preview) VALUES(:deezerID, :titre, :preview)');
+        $req = $this->db->prepare('INSERT INTO tracks(deezerID, titre, preview, album, album_cover, artist) VALUES(:deezerID, :titre, :preview, :album, :album_cover,:artist)');
         $req->execute(array(
             'deezerID' => $deezerID,
             'titre' => $titre,
-            'preview' => $preview
+            'preview' => $preview,
+            'album' => $album,
+            'album_cover' => $album_cover,
+            'artist' => $artist
             ));
+        return true;
     }
     public function removeTrack($id)
     {
