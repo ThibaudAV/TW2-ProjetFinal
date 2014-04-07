@@ -2,36 +2,28 @@
 
 
 class Track {
-    
-    var $ID;
-    var $deezerID;
-    var $titre;
-    var $artist;
-    var $album;
-    var $album_cover;
+	
+	var $ID;
+	var $deezerID;
+	var $titre;
+	var $preview;
 
 
-    var $preview;
+	public function __construct($deezerID, $titre, $preview) {
 
+		$this->deezerID = $deezerID;
+		$this->titre = $titre;
+		$this->preview = $preview;
 
-    public function __construct($deezerID, $titre, $preview) {
+	} // constructor
 
-        $this->deezerID = $deezerID;
-        $this->titre = $titre;
-        $this->preview = $preview;
+	function init($ID, $deezerID, $titre, $preview) {
 
-    } // constructor
+		$this->ID = $ID;
+		$this->deezerID = $deezerID;
+		$this->titre = $titre;
+		$this->preview = $preview;
 
-    function init($ID, $deezerID, $titre, $preview, $album, $album_cover, $artist) {
-
-        $this->ID = $ID;
-        $this->deezerID = $deezerID;
-        $this->titre = $titre;
-        $this->preview = $preview;
-        $this->album = $album;
-        $this->album_cover = $album_cover;
-        $this->artist = $artist;
-
-    } // function
-    
+	} // function
+	
 } // class

@@ -2,7 +2,7 @@
 
 
 include("Playlist.class.php");
-// include("Catalogue.class.php");
+include("Album.class.php");
 include("Track.class.php");
 include("Like.class.php");
 
@@ -41,33 +41,199 @@ class WebPlaylistDB {
         $reponse = $this->db->query("SELECT * FROM tracks");
         while ($row = $reponse->fetch())
         {
-            $track = new Track(null, null, null);
-            $track->init($row['id'], $row['deezerID'], $row['titre'], $row['preview'], $row['album'], $row['album_cover'], $row['artist']);
+            $track = new Track( null, null, null);
+            $track->init($row['id'], $row['deezerID'], $row['titre'], $row['preview']);
             array_push($tracks, $track);
         }
         return $tracks;
     }
-    public function addTrack($deezerID,$titre,$preview,$album, $album_cover, $artist)
-    {
-        $req = $this->db->prepare('INSERT INTO tracks(deezerID, titre, preview, album, album_cover, artist) VALUES(:deezerID, :titre, :preview, :album, :album_cover,:artist)');
-        $req->execute(array(
-            'deezerID' => $deezerID,
-            'titre' => $titre,
-            'preview' => $preview,
-            'album' => $album,
-            'album_cover' => $album_cover,
-            'artist' => $artist
-            ));
-        return true;
+
+    public function getTrack($ID) {
+
+        $reponse=$this->db->prepare("SELECT * FROM tracks WHERE id = :id"); // on prépare notre requête
+        $reponse->execute(array( 'id' => $ID ));
+        $track=$reponse->fetch(PDO::FETCH_OBJ);
+
+        return $track;
     }
+
     public function removeTrack($id)
     {
-        $this->db->exec("DELETE FROM tracks WHERE id = '".$id."'");
+        if ($this->db->exec("DELETE FROM tracks WHERE id = '".$id."'")) {
+            return "La musique a bien été supprimé.";
+        }
+
+        return false;
+    }
+
+
+    public function getPlaylists()
+    {
+        $playlists = array();
+
+        $reponse = $this->db->query("SELECT * FROM playlists");
+        while ($row = $reponse->fetch())
+        {
+            $playlist = new Playlist( null, null);
+            $playlist->init($row['id'], $row['nom']);
+            array_push($playlists, $playlist);
+        }
+        return $playlists;
     }
     
 
+    function getAlbums() {
+
+        $albums = array();
+
+        $reponse = $this->db->query("SELECT * FROM albums");
+        while ($row = $reponse->fetch())
+        {
+            $album = new Album();
+            $album->init( $row['id'], $row['deezerID'], $row['titre'], $row['artiste'], $row['coverURL'] );
+            $album->tracks = $this->getAlbumTracks($album->ID);
+
+            array_push($albums, $album);
+
+        }
+       return $albums;
+       
+    } // function
+
+    function getAlbumTracks($albumID) {
+
+        $tracks = array();
+
+        // $reponse = $this->db->prepare('SELECT * FROM albums as album, tracks as track WHERE album.id = track.albumID AND album.id = :albumID');
+        // $req->bindParam(
+        //     'albumID', $albumID
+        //     );
+        $reponse = $this->db->query("SELECT * FROM albums as album, tracks as track WHERE album.id = track.albumID AND album.id = ".$albumID);
+        while ($row = $reponse->fetch())
+        {
+
+            $track = new Track(null, null, null);
+            $track->init( $row['id'], $row['deezerID'], $row['titre'], $row['preview'] );
+
+            array_push($tracks, $track);
+
+        }
+        return $tracks;
+
+    } // function
 
 
+    public function ifAlbumExist($deezerID)
+    {
+        $req = $this->db->prepare("SELECT * from albums where deezerID = :deezerID");
+        $req->bindParam(":deezerID", $deezerID);
+        $req->execute();
+
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        }
+
+        if($req->rowCount() > 0)
+            return true;
+        
+        return false;
+    }
+    public function ifTrackExist($deezerID)
+    {
+        $req = $this->db->prepare("SELECT * from tracks where deezerID = :deezerID");
+        $req->bindParam(":deezerID", $deezerID);
+        $req->execute();
+
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        }
+
+        if($req->rowCount() > 0)
+            return true;
+        
+        return false;
+    }
+
+    public function addAlbum($album)
+    {
+
+        $req = $this->db->prepare('INSERT INTO albums(deezerID, titre, artiste, coverURL) VALUES(:deezerID, :titre, :artiste, :coverURL)');
+        $req->execute(array(
+            'deezerID' => $album->deezerID,
+            'titre' => $album->titre,
+            'artiste' => $album->artiste,
+            'coverURL' => $album->coverURL
+            ));
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        }
+        $return = "<ul>";
+        $return = "<li>L'album \"".$album->titre."\" a été créer</li>";
+
+        if($album->tracks) // si il y a des musique a ajouter 
+        {
+            foreach ($album->tracks as $track) {
+                $return .= "<li>".$this->addAlbumTrack($this->db->lastInsertId(), $track)."</li>";
+            }
+        }
+        $return .= "</ul>";
+        return $return;   
+    }
+
+    function addAlbumTrack($albumID,$track) {
+
+        $req = $this->db->prepare('INSERT INTO tracks(deezerID, titre, preview, albumID) VALUES(:deezerID, :titre, :preview, :albumID)');
+        $req->execute(array(
+            'deezerID' => $track->deezerID,
+            'titre' => $track->titre,
+            'preview' => $track->preview,
+            'albumID' => $albumID
+            ));
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        } else {
+            return "La musique \"".$track->titre."\" a été ajouté";            
+        }
+
+    } // function
+
+
+
+    function updateAlbum($album) { 
+        $req = $this->db->prepare('UPDATE albums SET titre = :titre, artiste = :artiste, coverURL = :coverURL WHERE deezerID = :deezerID');
+        $req->execute(array(
+            'deezerID' => $album->deezerID,
+            'titre' => $album->titre,
+            'artiste' => $album->artiste,
+            'coverURL' => $album->coverURL
+            ));
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        }
+        $return = "<ul>";
+        $return = "<li>L'album \"".$album->titre."\" a été mis à jour</li>";
+        if($album->tracks) // si il y a des musique a ajouter 
+        {
+            foreach ($album->tracks as $track) {
+                if(!$this->ifTrackExist($track->deezerID)) {
+                    // on récupére l'id de notre albums
+                    $reponse=$this->db->prepare("SELECT * FROM albums WHERE deezerID = :deezerID"); 
+                    $reponse->execute(array( 'deezerID' => $album->deezerID ));
+                    $album=$reponse->fetch(PDO::FETCH_OBJ);
+
+                    $return .= "<li>".$this->addAlbumTrack($album->id, $track)."</li>";
+                }
+            }
+        }
+        $return .= "</ul>";
+        return $return;
+
+    } // function
 
 /*
 
@@ -75,28 +241,7 @@ class WebPlaylistDB {
 
 
 
-    function getAlbums() {
-
-        $albums = array();
-
-        $sql = "SELECT SQL_NO_CACHE * " .
-               "FROM   Albums; ";
-
-        $result = $this->db->query($sql);
-
-        while( $row = $result->fetch_array() ) {
-
-            $album = new Album();
-            $album->init( $row['ID'], $row['Title'], $row['Artist'], $row['CoverURL'] );
-            $album->tracks = $this->getAlbumTracks($album->ID);
-
-            array_push($albums, $album);
-
-        } // while
-
-       return $albums;
-       
-    } // function
+    
 
     function getAlbumTracks($albumID) {
 

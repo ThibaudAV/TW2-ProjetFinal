@@ -4,17 +4,16 @@
 class Playlist {
     
     var $ID;
-    var $title;
-
-
+    var $nom;
     var $likes;
 
-    function init($ID, $title) {
+    function init($ID, $nom) {
 
         $this->ID = $ID;
-        $this->title = $title;
+        $this->nom = $nom;
 
     } // function
+
 
     
 } // class

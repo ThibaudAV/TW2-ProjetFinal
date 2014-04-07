@@ -1,109 +1,100 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-	<meta charset="utf-8">
-	<title>TW2 - Projet</title>
-	<link rel="stylesheet" type="text/css" href="media/css/style.css">
-<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+<?php
 
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
-
-		<script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
-
-
-	<style type="text/css">
-		.progressbarplay {
-			cursor:pointer;overflow: hidden;height: 8px;margin-bottom: 8px;background-color: #F7F7F7;background-image: -moz-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -ms-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -webkit-gradient(linear,0 0,0 100%,from(whiteSmoke),to(#F9F9F9));background-image: -webkit-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -o-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: linear-gradient(top,whiteSmoke,#F9F9F9);background-repeat: repeat-x;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#f9f9f9',GradientType=0);-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;
-		}
-		.progressbarplay .bar {
-			cursor:pointer;background: #4496C6;width: 0;height: 8px;color: white;font-size: 12px;text-align: center;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;-webkit-transition: width .6s ease;-moz-transition: width .6s ease;-ms-transition: width .6s ease;-o-transition: width .6s ease;transition: width .6s ease;
-		}
-	</style>
-
-</head>
-<body>
-
-<div id="contenaire">
-	
-	<header>
-		<div id="titre">
-			<h1><i class="fa fa-music"></i> MyPlay</h1>
-			<h2>Créé vos playlists</h2>
-		</div>
- 
-		<nav>
-	        <ul>
-	            <li><a href="#" class="select">Playlist</a></li>
-	            <li><a href="catalogue.php">Catalogue</a></li>
-	        </ul>
-	    </nav>
-	</header>
-	<section>
-		
-		<div id="dz-root"></div>
-		<div id="controlers">
-			<input type="button" onclick="DZ.player.playAlbum(302127); return false;" value="Play Daft Punk - Discovery"/>
-			<input type="button" onclick="DZ.player.playAlbum(301775); return false;" value="Play Daft Punk - Homework"/>
-			<br/>
-			<input type="button" onclick="DZ.player.play(); return false;" value="play"/>
-			<input type="button" onclick="DZ.player.pause(); return false;" value="pause"/>
-			<input type="button" onclick="DZ.player.prev(); return false;" value="prev"/>
-			<input type="button" onclick="DZ.player.next(); return false;" value="next"/>
-			<br/>
-			<input type="button" onclick="DZ.player.setVolume(20); return false;" value="set Volume 20"/>
-			<input type="button" onclick="DZ.player.setVolume(80); return false;" value="set Volume 80"/>
-			<br/><br/><br/>
-		</div>
-		<div id="slider_seek" class="progressbarplay" style="">
-			<div class="bar" style="width: 0%;"></div>
-		</div>
-	</section>
+require('lib/flight/Flight.php');
+require("lib/WebPlaylistDB.class.php");
+$_SERVER['HTTP_HOST'] = 'http://localhost/Cours/Tech_web2/TW2_Projet';
 
 
 
-</div>
+	// Flight::render('layout', array('title' => 'TW2 - Projet'));
 
-<!-- 
-event_listener : <br/>
-<pre id="event_listener" style="height:100px;overflow:auto;"></pre>
- -->
 
-<script>
-	$(document).ready(function(){
-		$("#controlers input").attr('disabled', true);
-		$("#slider_seek").click(function(evt,arg){
-			var left = evt.offsetX;
-			console.log(evt.offsetX, $(this).width(), evt.offsetX/$(this).width());
-			DZ.player.seek((evt.offsetX/$(this).width()) * 100);
-		});
-	});
-	function event_listener_append() {
-		var pre = document.getElementById('event_listener');
-		var line = [];
-		for (var i = 0; i < arguments.length; i++) {
-			line.push(arguments[i]);
-		}
-		// pre.innerHTML += line.join(' ') + "\n";
-	}
-	function onPlayerLoaded() {
-		$("#controlers input").attr('disabled', false);
-		event_listener_append('player_loaded');
-		DZ.Event.subscribe('current_track', function(arg){
-			event_listener_append('current_track', arg.index, arg.track.title, arg.track.album.title);
-		});
-		DZ.Event.subscribe('player_position', function(arg){
-			event_listener_append('position', arg[0], arg[1]);
-			$("#slider_seek").find('.bar').css('width', (100*arg[0]/arg[1]) + '%');
-		});
-	}
-	DZ.init({
-		appId  : '8',
-		channelUrl : 'http://developers.deezer.com/examples/channel.php',
-		player : {
-			onload : onPlayerLoaded
-		}
-	});
-</script><br/>
-</body>
-</html>
+Flight::route('/', function(){
+
+	$db = new WebPlaylistDB();
+	$playlists = $db->getPlaylists();
+	$albums = $db->getAlbums();
+    Flight::render('index', array( 'albums' => $albums,'playlists' => $playlists), 'body_content');
+
+    Flight::render('layout', array('page' => 'index','title' => 'TW2 - Projet'));
+
+});
+
+Flight::route('/collection', function(){
+
+	$db = new WebPlaylistDB();
+	$albums = $db->getAlbums();
+    Flight::render('collection', array( 'albums' => $albums), 'body_content');
+    
+    Flight::render('layout', array('page' => 'collection','title' => 'TW2 - Projet'));
+
+});
+
+
+
+
+//****************************************
+//**********  REST services
+//*****************************************
+Flight::route('GET /albums', function(){
+
+    $db = new WebPlaylistDB();
+    $albums = $db->getAlbums();
+
+    Flight::json($albums);
+});
+
+
+Flight::route('GET /albums/@id', function($id){
+
+    $db = new WebPlaylistDB();
+    $album = $db->getAlbum($id);
+    echo "string";
+
+    echo json_encode($album);
+
+});
+
+
+Flight::route('PUT /addTrack', function(){
+
+    $request = Flight::request();
+    $album = json_decode($request->body);
+     // var_dump($album->deezerID);
+    $db = new WebPlaylistDB();
+    if($db->ifAlbumExist($album->deezerID))
+        $msg = $db->updateAlbum($album);  // Updates an album
+    else
+        $msg = $db->addAlbum($album);  // Creates an album
+
+
+    if($msg){
+	    $return = $arrayName = array('type' => 'success','msg' => $msg );
+	    echo json_encode($return);
+    } else {
+	    $return = $arrayName = array('type' => 'error' );
+	    echo json_encode($return);
+    }
+});
+
+
+Flight::route('DELETE /supprTrack', function(){
+
+    $request = Flight::request();
+    $track = json_decode($request->body);
+
+    $db = new WebPlaylistDB();
+
+    $msg = $db->removeTrack($track->ID);
+
+    if($msg){
+	    $return = $arrayName = array('type' => 'success','msg' => $msg );
+	    echo json_encode($return);
+    } else {
+	    $return = $arrayName = array('type' => 'error','msg' => "La musique n'existe pas" );
+	    echo json_encode($return);
+    }
+
+});
+
+Flight::start();
