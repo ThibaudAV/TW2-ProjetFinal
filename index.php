@@ -36,7 +36,7 @@ Flight::route('/collection', function(){
 //****************************************
 //**********  REST services
 //*****************************************
-Flight::route('GET /albums', function(){
+Flight::route('GET /getalbums', function(){
 
     $db = new WebPlaylistDB();
     $albums = $db->getAlbums();
@@ -56,16 +56,29 @@ Flight::route('GET /albums/@id', function($id){
 });
 
 
-Flight::route('PUT /addTrack', function(){
-
+Flight::route('PUT /addAlbum', function(){
+    $msg ="";
     $request = Flight::request();
     $album = json_decode($request->body);
      // var_dump($album->deezerID);
     $db = new WebPlaylistDB();
-    if($db->ifAlbumExist($album->deezerID))
-        $msg = $db->updateAlbum($album);  // Updates an album
-    else
+    $ifAlbumExist = $db->ifAlbumExist($album->deezerID);
+    if($ifAlbumExist) 
+    {
+        if($album->tracks) // si il y a des musique a ajouter 
+        {
+            foreach ($album->tracks as $track) {
+                if(!$db->ifTrackExist($track->deezerID)) {
+                    $msg = $db->addAlbumTrack($ifAlbumExist,$track);  // Updates an album
+                } else {
+                    $msg = "La musique est déjà dans la collection.";
+                }
+            }
+        }
+    } else {
+        
         $msg = $db->addAlbum($album);  // Creates an album
+    }
 
 
     if($msg){
@@ -91,10 +104,27 @@ Flight::route('DELETE /supprTrack', function(){
 	    $return = $arrayName = array('type' => 'success','msg' => $msg );
 	    echo json_encode($return);
     } else {
-	    $return = $arrayName = array('type' => 'error','msg' => "La musique n'existe pas" );
+	    $return = $arrayName = array('type' => 'error','msg' => "La musique n'existe pas." );
 	    echo json_encode($return);
     }
 
 });
+Flight::route('DELETE /supprAlbum', function(){
 
+    $request = Flight::request();
+    $album = json_decode($request->body);
+
+    $db = new WebPlaylistDB();
+
+    $msg = $db->removeAlbum($album->ID);
+
+    if($msg){
+        $return = $arrayName = array('type' => 'success','msg' => $msg );
+        echo json_encode($return);
+    } else {
+        $return = $arrayName = array('type' => 'error','msg' => "L'album n'existe pas." );
+        echo json_encode($return);
+    }
+
+});
 Flight::start();
