@@ -1,5 +1,7 @@
 # Base de données: `WebRadioDB`
 
+![alt tag](https://github.com/ThibaudAV/TW2-ProjetFinal/schemaDB_SQL.png)
+
 -- Structure de la table `albums`
 
 ```SQL
