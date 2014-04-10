@@ -81,6 +81,8 @@
 	</article>
 	<?php } ?>
 </div>
+
+<?php if( isset($user->role) and ($user->role != 'user' or $user->role != 'admin')){?>
 <div id="mesPlaylists">
 	<select name="playlist" id="selectPlaylist">
 	<?php foreach($db->getUserPlaylists($db->getUser()->ID) as $playlist ) {?>
@@ -90,7 +92,7 @@
 	<div id="playlists">
 	</div>
 </div>
-
+<?php } ?>
 </section>
 
 

@@ -228,21 +228,6 @@ function majCatalogues (playlistID) {
 					$('#catalogues').append(articleHTML);
 				}
 			
-			// for(key in albums) {
-				// articleHTML += '<article class="album">'+
-				// '<img src="'+albums[key].coverURL+'" width="80" height="80">'+
-				// '<h3>'+albums[key].titre+'<i data-id="'+albums[key].ID+'" class="supprAlbum fa fa-minus-square"></i></h3>'+
-				// 'de <i>'+albums[key].artiste+'	</i>'+
-				// '<ul class="tracks">';
-
-				// tracks = albums[key].tracks;
-				// for(key in tracks) {
-				// 	articleHTML += 	'<li class="track" >'+tracks[key].titre+'<i data-id="'+tracks[key].ID+'" class="supprTrack fa fa-minus-square"></i></li>';
-				// }
-				// articleHTML += '</ul></article>';
-
-			// }
-
 		});
 }
 

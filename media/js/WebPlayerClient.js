@@ -1,0 +1,101 @@
+
+
+////////////////////////////////////////////////////////////////////////////////////
+//
+// This class encapsulates ALL the logic used for interacting with the application server-side
+// using AJAX
+//
+////////////////////////////////////////////////////////////////////////////////////
+
+
+function WebPlayerClient() {
+
+
+    this.getCurrentTrack = function() {
+
+        var currentTrack = null;
+
+        $.ajax({
+            url:  "api/playlist/currentTrack",
+            type: "GET",
+            async: false,
+            success: function(response) {
+                currentTrack = JSON.parse(response);
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerServer.getCurrentTrack()");
+            }
+        });
+
+        return currentTrack;
+
+    } // function
+
+
+    this.getProposedTracks = function() {
+
+        var proposedTracks = new Array();
+
+        $.ajax({
+            url:  "api/playlist/proposedTracks",
+            type: "GET",
+            async: false,
+            success: function(response) {
+                proposedTracks = JSON.parse(response);
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerServer.getProposedTracks()");
+            }
+        });
+
+        return proposedTracks;
+
+    } // function
+
+
+    this.getNextTrack = function(previousTrackProposalID) {
+
+        var nextTrack = null;
+
+        $.ajax({
+            url:  "api/playlist/nextTrack",
+            type: "POST",
+            data: { "previousTrackProposalID" : previousTrackProposalID },
+            async: false,
+            success: function(response) {
+                nextTrack = JSON.parse(response);
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerServer.getNextTrack()");
+            }
+        });
+
+
+        return nextTrack;
+
+    } // function
+
+
+    this.proposeTrack = function(trackID) {
+
+        var proposedTrack = { trackID : trackID };
+
+        $.ajax({
+            url:  "api/playlist/proposedTracks",
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(proposedTrack),
+            async: false,
+            success: function(response) {
+                console.log("Proposed Song: " + trackID );
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerServer.proposeTrack()");
+            }
+        });
+
+
+    } // function
+
+
+} // function
