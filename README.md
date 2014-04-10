@@ -1,5 +1,6 @@
-
 # Base de données: `WebRadioDB`
+
+![alt tag](https://github.com/ThibaudAV/TW2-ProjetFinal/schemaDB_SQL.png)
 
 -- Structure de la table `albums`
 
@@ -11,7 +12,7 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `artiste` varchar(100) NOT NULL,
   `coverURL` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16 ;
 ```
 -- --------------------------------------------------------
 
@@ -58,7 +59,7 @@ CREATE TABLE IF NOT EXISTS `tracks` (
   `albumID` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `albumID` (`albumID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=41 ;
 ```
 -- --------------------------------------------------------
 
