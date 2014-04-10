@@ -5,6 +5,7 @@ include("Playlist.class.php");
 include("Album.class.php");
 include("Track.class.php");
 include("Like.class.php");
+include("User.class.php");
 
 
 class WebPlaylistDB {
@@ -72,7 +73,10 @@ class WebPlaylistDB {
 
         $reponse=$this->db->prepare("SELECT * FROM tracks WHERE id = :id"); // on prépare notre requête
         $reponse->execute(array( 'id' => $ID ));
-        $track=$reponse->fetch(PDO::FETCH_OBJ);
+        $rep=$reponse->fetch(PDO::FETCH_OBJ);
+
+        $track = new Track( null, null, null);
+        $track->init($rep->id, $rep->deezerID, $rep->titre, $rep->preview);
 
         return $track;
     }
@@ -105,6 +109,23 @@ class WebPlaylistDB {
         } else {
             return "La musique \"".$track->titre."\" a été ajouté";            
         }
+
+    } // function
+
+        public function getPlaylistTracks($playlist) {
+
+        $tracks = array();
+        $req = $this->db->prepare("SELECT * FROM playlists_tracks as pt, tracks as track WHERE pt.trackID = track.id AND pt.playlistID = :playlist");
+        $req->execute(array(
+            'playlist' => $playlist,
+            ));
+        while ($row = $req->fetch())
+        {
+            $track = new Track(null, null, null);
+            $track->init( $row['id'], $row['deezerID'], $row['titre'], $row['preview'] );
+            array_push($tracks, $track);
+        }
+        return $tracks;
 
     } // function
 
@@ -230,6 +251,72 @@ class WebPlaylistDB {
     *  *********** Playlists
     *  **********************************/
 
+
+
+
+    /* **********************************
+    *  *********** Users
+    *  **********************************/
+    public function login($username,$password)
+    {
+        echo $username.$password;
+
+        $req=$this->db->prepare("SELECT * FROM users WHERE username = :username and password = :password"); // on prépare notre requête
+        $req->execute(array( 'username' => $username, 'password' =>$password ));
+        $user=$req->fetch(PDO::FETCH_OBJ);
+
+        if($req->rowCount() > 0)
+        {
+            $_SESSION['WP_Login_UN'] = $user->username;
+            $_SESSION['WP_Login_PW'] = $user->password;
+            // setcookie("WP_Login", $value, time()+3600);  /* expire dans 1 heure */
+            return true;
+        } 
+        return false;
+
+    }
+    public function getUser()
+    {
+        
+        if(isset($_SESSION['WP_Login_UN']) and $_SESSION['WP_Login_UN'] !='')
+        {
+            if(isset($_SESSION['WP_Login_PW']) and $_SESSION['WP_Login_PW'] !='')
+            {
+                $username = $_SESSION['WP_Login_UN'];
+                $password = $_SESSION['WP_Login_PW'];
+
+                $req=$this->db->prepare("SELECT * FROM users WHERE username = :username and password = :password"); // on prépare notre requête
+                $req->execute(array( 'username' => $username, 'password' =>$password ));
+                $user=$req->fetch(PDO::FETCH_OBJ);
+                if($req->rowCount() > 0)
+                {
+
+                    return new User($user->id,$user->username,$user->role);
+                
+                }  
+            }  
+        } 
+        // sinon on retoune un utilisateur invité
+        return false;//new User(0,'invite','invite');
+    }
+    public function getUsers()
+    {
+        $users = array();
+
+        $reponse = $this->db->query("SELECT * FROM users");
+
+        while ($row = $reponse->fetch())
+        {
+            $user = new User(
+                $row['id'], $row['username'], $row['role']);
+            array_push($users, $user);
+        }
+       return $users;
+    }
+
+    /* **********************************
+    *  *********** Playlist
+    *  **********************************/
     public function getPlaylists()
     {
         $playlists = array();
@@ -237,12 +324,150 @@ class WebPlaylistDB {
         $reponse = $this->db->query("SELECT * FROM playlists");
         while ($row = $reponse->fetch())
         {
-            $playlist = new Playlist( null, null);
-            $playlist->init($row['id'], $row['nom']);
+            $playlist = new Playlist($row['id'], $row['nom'], $row['userID']);
             array_push($playlists, $playlist);
         }
         return $playlists;
     }
+
+    public function getUserPlaylists($userID)
+    {
+        $playlists = array();
+
+        $req=$this->db->prepare("SELECT * FROM playlists WHERE userID = :userID");
+        $req->execute(array( 'userID' => $userID));
+        while ($row = $req->fetch())
+        {
+            $playlist = new Playlist($row['id']
+                , $row['nom'], $row['userID']);
+            array_push($playlists, $playlist);
+        }
+        // var_dump($playlists);
+       return $playlists;
+    }
+
+
+    public function setUserPlaylists($userID,$nom)
+    {
+        $req = $this->db->prepare('INSERT INTO playlists(nom, userID) VALUES(:nom, :userID)');
+        $req->execute(array(
+            'nom' => $nom,
+            'userID' => $userID,
+            ));
+        if ($req->errorInfo()[1]) {
+            var_dump($req->errorInfo());
+            return false;
+        }
+        return true;
+    }
+
+    public function getPlaylist($ID)
+    {
+
+        $req=$this->db->prepare("SELECT * FROM playlists WHERE id = :ID");
+        $req->execute(array( 'ID' => $ID));
+        $_playlist = $req->fetch(PDO::FETCH_OBJ);
+        
+        $playlist = new Playlist($_playlist->id, $_playlist->nom, $_playlist->userID);
+        $playlist->tracks = $this->getPlaylistTracks($_playlist->id);
+       return $playlist;
+    }
+    public function addPlaylistTrack($playlistID, $trackID)
+    {
+
+        $req = $this->db->prepare('INSERT INTO playlists_tracks(playlistID, trackID) VALUES(:playlistID, :trackID)');
+        $req->execute(array(
+            'playlistID' => $playlistID,
+            'trackID' => $trackID
+            ));
+        if ($req->errorInfo()[1]) {
+            return "La musique est deja dans la playlist";
+        }
+        $return = "La musique été ajouté à la playlist";
+
+        return $return;   
+    }
+    public function supprPlaylistTrack($playlistID, $trackID)
+    {   
+        if ($this->db->exec("DELETE FROM playlists_tracks WHERE playlistID = '".$playlistID."' AND trackID = '".$trackID."' ")) {
+            return "La muisique a été supprimé de la playlist";
+        }
+        return false;
+    }
+    /* **********************************
+    *  *********** search
+    *  **********************************/
+
+
+    public function search($search)
+    {
+        $reponces = array();
+        $albums = array();
+        $albumsTracks = array();
+
+        if ($search != '') {
+
+            $req=$this->db->prepare("SELECT * FROM albums WHERE titre LIKE :search");
+            $req->execute(array( 'search' => '%'.$search.'%'));
+            while ($row = $req->fetch())
+            {
+                $album = new Album();
+                $album->init( $row['id'], $row['deezerID'], $row['titre'], $row['artiste'], $row['coverURL'] );
+                $album->tracks = $this->getAlbumTracks($album->ID);
+                array_push($albums, $album);
+            }
+            $req=$this->db->prepare("SELECT album.id, album.deezerID, album.titre,album.artiste,album.coverURL, track.id as trackID FROM albums as album, tracks as track WHERE track.titre LIKE :search and track.albumID = album.id group by track.id ORDER BY album.id");
+            
+            $req->execute(array( 'search' => '%'.$search.'%'));
+            while ($row = $req->fetch())
+            {
+                $albumExist = false;
+                foreach ($albumsTracks as $album) {
+                    if($album->ID == $row['id'])
+                    {
+                        $albumExist = &$album;
+                    }
+                    else
+                    {
+                        $albumExist = false;
+                    }
+                }
+                if($albumExist)
+                {
+                    // var_dump($albumExist);
+                    // exit;
+                    // var_dump($this->getTrack($row['trackID']));
+
+                    $ar = array();
+                    $ar[] = $this->getTrack($row['trackID']);
+                    $albumExist->tracks = (object) array_merge( (array) $albumExist->tracks,(array) $ar );
+
+                     // array_push( $albumExist->tracks, $this->getTrack($row['trackID'])  );
+                    // $albumExist->tracks[] = (object) $this->getTrack($row['trackID']);
+                    // $albumExist->tracks = 'rr';
+                    // var_dump($albumExist->tracks);
+                    // exit;
+
+                    // $albumExist->tracks = (object) array_merge( (array) $albumExist->tracks,(array) $this->getTrack($row['trackID']) );
+
+                } else {
+                    $album = new Album();
+                    $album->init( $row['id'], $row['deezerID'], $row['titre'], $row['artiste'], $row['coverURL'] );
+                // $album->tracks = $this->getAlbumTracks($album->ID);
+                    $album->tracks = array($this->getTrack($row['trackID']));
+                    array_push($albumsTracks, $album);
+                }
+            }
+            $reponces['albums'] = $albums;
+            $reponces['albumsTracks'] = $albumsTracks;
+
+            // array_push($reponces, $albums);
+            // array_push($reponces, $tracks);
+            return $reponces;
+        }
+        return $search;
+    }
+
 /*
 
 

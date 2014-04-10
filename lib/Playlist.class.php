@@ -5,12 +5,14 @@ class Playlist {
     
     var $ID;
     var $nom;
-    var $likes;
+    var $userID;
+    var $tracks;
 
-    function init($ID, $nom) {
+    function __construct($ID, $nom, $userID) {
 
         $this->ID = $ID;
         $this->nom = $nom;
+        $this->userID = $userID;
 
     } // function
 

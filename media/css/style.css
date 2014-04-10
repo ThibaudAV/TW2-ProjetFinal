@@ -60,29 +60,32 @@ vertical-align: top;*/
     width: 565px;
     padding-top: 5px;
 }
+nav.center {
+	text-align: center;
+}
 
-header nav ul {
+ nav ul {
     list-style-type: none;
 }
 
-header nav li {
+ nav li {
     display: inline-block;
     margin-right: 15px;
 }
 
-header nav a {
+ nav a {
     padding-bottom: 3px;
     text-decoration: none;
     font-size: 1.5em;
-    color: #181818;
+    color: #2994B6;
 }
 
-header nav a:hover {
+ nav a:hover {
     border-bottom: 3px solid #760001;
     color: #A98950;
 }
 
-header nav .select {
+ nav .select {
     border-bottom: 3px solid #760001;
     color: #3F2202;
 }
@@ -301,7 +304,8 @@ ul#catalogues .suppr:hover {
 }
 
 #infoBule {
-    position: absolute;
+
+    position: fixed;
     top: 10px;
     right: 10px;
     width: 300px;
@@ -526,14 +530,9 @@ article.playlist h3 {
     margin: 0 4px 4px 2px;
 }
 
-article.playlist img {
-    float: left;
-    margin: 2px;
-    padding: 0;
-}
 
 article.playlist ul.tracks {
-    margin: 2px 0 0 85px;
+    margin: 2px 0 0 5px;
     padding: 0 0 0 0;
     list-style-type: none;
 }
@@ -561,4 +560,27 @@ article.playlist ul.tracks li.track .vote {
 article.playlist ul.tracks li.track .vote:hover {
     float: right;
     color: #4A4A4A;
+}
+
+article.playlist ul.tracks li.track .supprTrack {
+    float: right;
+    margin-left: 5px;
+    color: #FF002C;
+    opacity: 0.6;
+}
+
+article.playlist ul.tracks li.track .supprTrack:hover {
+    opacity: 1;
+}
+article.playlist ul.tracks li.track .add {
+    float: right;
+    margin-left: 5px;
+    color: #C5C5C5;
+}
+
+article.playlist ul.tracks li.track:hover .add {
+    color: #4A4A4A;
+}
+#mesPlaylists{
+	text-align: center;
 }
