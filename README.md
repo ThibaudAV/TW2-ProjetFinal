@@ -1,10 +1,7 @@
 
+# Base de données: `WebRadioDB`
 
-# BDD 
-
---
 -- Structure de la table `albums`
---
 
 ```SQL
 CREATE TABLE IF NOT EXISTS `albums` (
@@ -14,42 +11,44 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `artiste` varchar(100) NOT NULL,
   `coverURL` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=26 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
 ```
 -- --------------------------------------------------------
 
---
--- Structure de la table `likes`
---
-
-```SQL
-CREATE TABLE IF NOT EXISTS `likes` (
-  `nombre` int(11) NOT NULL,
-  `id_track` int(11) NOT NULL,
-  `id_playlist` int(11) NOT NULL,
-  PRIMARY KEY (`id_track`,`id_playlist`),
-  KEY `id_playlist` (`id_playlist`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-```
--- --------------------------------------------------------
-
---
 -- Structure de la table `playlists`
---
-
 ```SQL
 CREATE TABLE IF NOT EXISTS `playlists` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nom` varchar(255) NOT NULL,
+  `userID` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=8 ;
 ```
 -- --------------------------------------------------------
 
---
--- Structure de la table `tracks`
---
+-- Structure de la table `playlists_tracks`
+```SQL
+CREATE TABLE IF NOT EXISTS `playlists_tracks` (
+  `playlistID` int(11) NOT NULL,
+  `trackID` int(11) NOT NULL,
+  PRIMARY KEY (`playlistID`,`trackID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+```
+-- --------------------------------------------------------
 
+-- Structure de la table `proposed_tracks`
+```SQL
+CREATE TABLE IF NOT EXISTS `proposed_tracks` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `trackID` int(11) NOT NULL,
+  `votes` int(11) NOT NULL,
+  `status` enum('Proposed','Playing','Played') NOT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+```
+-- --------------------------------------------------------
+
+-- Structure de la table `tracks`
 ```SQL
 CREATE TABLE IF NOT EXISTS `tracks` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -59,24 +58,17 @@ CREATE TABLE IF NOT EXISTS `tracks` (
   `albumID` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `albumID` (`albumID`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=40 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=39 ;
 ```
---
--- Contraintes pour les tables exportées
---
+-- --------------------------------------------------------
 
---
--- Contraintes pour la table `likes`
---
+-- Structure de la table `users`
 ```SQL
-ALTER TABLE `likes`
-  ADD CONSTRAINT `likes_ibfk_2` FOREIGN KEY (`id_playlist`) REFERENCES `playlists` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `likes_ibfk_3` FOREIGN KEY (`id_track`) REFERENCES `tracks` (`id`);
-```
---
--- Contraintes pour la table `tracks`
---
-```SQL
-ALTER TABLE `tracks`
-  ADD CONSTRAINT `tracks_ibfk_1` FOREIGN KEY (`albumID`) REFERENCES `albums` (`id`);
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 ```
