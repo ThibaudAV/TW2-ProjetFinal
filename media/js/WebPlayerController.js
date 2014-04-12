@@ -1,25 +1,28 @@
 
 
-function WebPlayerController() {
+function WebPlayerController(HTTP_HOST) {
 
-    this.webPlayerServer = new WebPlayerClient();
+    this.webPlayerServer = new WebPlayerClient(HTTP_HOST);
     this.appID = "112661";
 
     this.currentTrack = null;
     this.isPlaying = false;
 
+    
 
-    this.init = function() {
+
+
+    this.init = function(_channelUrl) {
 
         _this = this;
 
         DZ.init({
             appId  : this.appID,
-            channelUrl : 'http://localhost:63342/WebPlayer/views/channel.php',
+            channelUrl : _channelUrl,
             player: {
-                container: 'player',
-                width : 800,
-                height : 300,
+                // container: 'player',
+                // width : 800,
+                // height : 300,
                 onload : function(){
 
                     //_this.startPlaying();
@@ -124,7 +127,7 @@ function WebPlayerController() {
 
         } // for
 
-        var playlist = document.getElementById("playlist");
+        var playlist = document.getElementById("player");
         var tracks = document.getElementById("proposedTracks");
 
         playlist.replaceChild(table, tracks);
@@ -137,7 +140,7 @@ function WebPlayerController() {
         var trackInformation = null;
 
         $.ajax({
-            url:  "api/tracks/" + trackID,
+            url:  "getTrack/" + trackID,
             type: "GET",
             async: false,
             success: function(response) {

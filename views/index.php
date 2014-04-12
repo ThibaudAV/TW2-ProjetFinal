@@ -6,9 +6,7 @@
 
 	<div id="controlers">
 
-<a href="#" class="fa fa-step-backward"></a>
-<a href="#" style="" class="fa fa-play"></a>
-<a href="#" class="fa fa-step-forward"></a>
+<a href="#" style="" class="fa fa-play" onclick="webPlayer.startPlaying();"></a>
 <!-- <i class="fa fa-pause"></i> -->
 
 	</div>
@@ -17,6 +15,8 @@
 		<div id="slider_seek" class="progressbarplay" style="">
 		<div class="bar" style="width: 0%;"></div>
 	</div>
+	
+        <table id="proposedTracks"></table>
 </section>
 
 <section id="playlist">
@@ -84,7 +84,7 @@
 
 <?php if( isset($user->role) and ($user->role != 'user' or $user->role != 'admin')){?>
 <div id="mesPlaylists">
-	<select name="playlist" id="selectPlaylist">
+	<select name="playlist" class="form-field" id="selectPlaylist">
 	<?php foreach($db->getUserPlaylists($db->getUser()->ID) as $playlist ) {?>
 	<option value="<?php echo $playlist->ID ?>"><?php echo $playlist->nom ?></option>
 	<?php } ?>
@@ -98,6 +98,21 @@
 
 
 <script>
+
+
+// Init du lecteur Radio
+	var webPlayer = null;
+
+	window.onload = function() {
+		webPlayer = new WebPlayerController('<?php echo $_SERVER['HTTP_HOST'];?>');
+		webPlayer.init('http://developers.deezer.com/examples/channel.php');
+	}
+
+
+
+
+
+
 	$(document).ready(function(){
 		$("#controlers input").attr('disabled', true);
 		$("#slider_seek").click(function(evt,arg){
@@ -110,6 +125,7 @@
 		$(document).on('click', '.mesPlaylists', function() {
 			$("#catalogueCommun").hide();
 			$("#mesPlaylists").show();
+			majplaylists($( '#selectPlaylist' ).val());
 		});
 		$(document).on('click', '.catalogueCommun', function() {
 			$("#mesPlaylists").hide();
@@ -117,10 +133,9 @@
 		});
 
 		$(document).on('change ','#selectPlaylist',function(){
-			majCatalogues(this.value);
+			majplaylists(this.value);
 		});
 
-		majplaylists($( '#selectPlaylist' ).val());
 
 		function majplaylists (playlistID) {
 			$.ajax({
@@ -132,7 +147,7 @@
 			})
 			.done(function( playlist ) {
 
-				$('#catalogues').html("");
+				$('#playlists').html("");
 				if(playlist.tracks)
 				{
 					var articleHTML = "";
@@ -150,32 +165,31 @@
 		}
 
 
-
 	});
-	function event_listener_append() {
-		var pre = document.getElementById('event_listener');
-		var line = [];
-		for (var i = 0; i < arguments.length; i++) {
-			line.push(arguments[i]);
-		}
-		// pre.innerHTML += line.join(' ') + "\n";
-	}
-	function onPlayerLoaded() {
-		$("#controlers input").attr('disabled', false);
-		event_listener_append('player_loaded');
-		DZ.Event.subscribe('current_track', function(arg){
-			event_listener_append('current_track', arg.index, arg.track.title, arg.track.album.title);
-		});
-		DZ.Event.subscribe('player_position', function(arg){
-			event_listener_append('position', arg[0], arg[1]);
-			$("#slider_seek").find('.bar').css('width', (100*arg[0]/arg[1]) + '%');
-		});
-	}
-	DZ.init({
-		appId  : '8',
-		channelUrl : 'http://developers.deezer.com/examples/channel.php',
-		player : {
-			onload : onPlayerLoaded
-		}
-	});
+	// function event_listener_append() {
+	// 	var pre = document.getElementById('event_listener');
+	// 	var line = [];
+	// 	for (var i = 0; i < arguments.length; i++) {
+	// 		line.push(arguments[i]);
+	// 	}
+	// 	// pre.innerHTML += line.join(' ') + "\n";
+	// }
+	// function onPlayerLoaded() {
+	// 	$("#controlers input").attr('disabled', false);
+	// 	event_listener_append('player_loaded');
+	// 	DZ.Event.subscribe('current_track', function(arg){
+	// 		event_listener_append('current_track', arg.index, arg.track.title, arg.track.album.title);
+	// 	});
+	// 	DZ.Event.subscribe('player_position', function(arg){
+	// 		event_listener_append('position', arg[0], arg[1]);
+	// 		$("#slider_seek").find('.bar').css('width', (100*arg[0]/arg[1]) + '%');
+	// 	});
+	// }
+	// DZ.init({
+	// 	appId  : '8',
+	// 	channelUrl : 'http://developers.deezer.com/examples/channel.php',
+	// 	player : {
+	// 		onload : onPlayerLoaded
+	// 	}
+	// });
 </script>

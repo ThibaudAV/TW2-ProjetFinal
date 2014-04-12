@@ -8,15 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-function WebPlayerClient() {
+function WebPlayerClient(HTTP_HOST) {
 
 
     this.getCurrentTrack = function() {
 
         var currentTrack = null;
-
         $.ajax({
-            url:  "api/playlist/currentTrack",
+            url:  HTTP_HOST+"/radio/currentTrack",
             type: "GET",
             async: false,
             success: function(response) {
@@ -37,7 +36,7 @@ function WebPlayerClient() {
         var proposedTracks = new Array();
 
         $.ajax({
-            url:  "api/playlist/proposedTracks",
+            url:  HTTP_HOST+"/radio/proposedTracks",
             type: "GET",
             async: false,
             success: function(response) {
@@ -58,7 +57,7 @@ function WebPlayerClient() {
         var nextTrack = null;
 
         $.ajax({
-            url:  "api/playlist/nextTrack",
+            url:  HTTP_HOST+"/radio/nextTrack",
             type: "POST",
             data: { "previousTrackProposalID" : previousTrackProposalID },
             async: false,
@@ -81,7 +80,7 @@ function WebPlayerClient() {
         var proposedTrack = { trackID : trackID };
 
         $.ajax({
-            url:  "api/playlist/proposedTracks",
+            url:  HTTP_HOST+"/radio/proposedTracks",
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(proposedTrack),

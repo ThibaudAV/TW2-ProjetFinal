@@ -5,6 +5,11 @@
 	<title><?php echo $title;
  ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['HTTP_HOST'] ?>/media/css/style.css">
+
+
+    <script src="<?php echo $_SERVER['HTTP_HOST'] ?>/media/js/WebPlayerController.js"></script>
+    <script src="<?php echo $_SERVER['HTTP_HOST'] ?>/media/js/WebPlayerClient.js"></script>
+
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>

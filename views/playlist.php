@@ -23,7 +23,7 @@
 	<h2>Mes playlists</h2>
 
 
-<select name="playlist" id="selectPlaylist">
+<select name="playlist" class="form-field" id="selectPlaylist">
 	<?php foreach($db->getUserPlaylists($db->getUser()->ID) as $playlist ) {?>
 	<option value="<?php echo $playlist->ID ?>"><?php echo $playlist->nom ?></option>
 	<?php } ?>

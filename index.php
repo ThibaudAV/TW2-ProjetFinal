@@ -3,6 +3,7 @@ session_start();
 
 require('lib/flight/Flight.php');
 require("lib/WebPlaylistDB.class.php");
+require("lib/WebPlayerServer.class.php");
 $_SERVER['HTTP_HOST'] = 'http://localhost/Cours/Tech_web2/TW2_Projet';
 
 
@@ -149,12 +150,19 @@ Flight::route('GET /albums/@id', function($id){
 
     $db = new WebPlaylistDB();
     $album = $db->getAlbum($id);
-    echo "string";
 
     echo json_encode($album);
 
 });
+Flight::route('GET /getTrack/@id', function($id){
+    $request = Flight::request();
 
+    $db = new WebPlaylistDB();
+    $track = $db->getTrack($id);
+
+    echo json_encode($track);
+
+});
 Flight::route('PUT /addPlaylistTrack', function(){
     $request = Flight::request();
     $rep = json_decode($request->body);
@@ -256,4 +264,53 @@ Flight::route('DELETE /supprAlbum', function(){
     }
 
 });
+
+
+//****************************************
+//**********  REST services API radio
+//*****************************************
+
+
+Flight::route('GET /radio/currentTrack', function(){
+
+    $webPlayerServer = new WebPlayerServer();
+    $currentTrack = $webPlayerServer->getCurrentTrack();
+
+    echo json_encode($currentTrack);
+
+});
+
+
+Flight::route('GET|PUT /radio/proposedTracks', function(){
+
+    $request = Flight::request();
+    $webPlayerServer = new WebPlayerServer();
+
+    if($request->method == "GET") {
+        $proposedTracks = $webPlayerServer->getProposedTracks();
+        echo json_encode($proposedTracks);
+    }
+
+    if($request->method == "PUT") {
+        $proposedTrack = json_decode($request->body);
+        $webPlayerServer->proposeTrack($proposedTrack->trackID);
+    }
+
+});
+
+
+Flight::route('POST /radio/nextTrack', function(){
+
+    $request = Flight::request();
+    $previousTrackProposalID = $request->data["previousTrackProposalID"];
+
+    $webPlayerServer = new WebPlayerServer();
+    $nextTrack = $webPlayerServer->getNextTrack( $previousTrackProposalID );
+
+    echo json_encode($nextTrack);
+
+});
+
+
+
 Flight::start();

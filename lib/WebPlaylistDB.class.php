@@ -1,11 +1,10 @@
 <?php
 
 
-include("Playlist.class.php");
-include("Album.class.php");
-include("Track.class.php");
-include("Like.class.php");
-include("User.class.php");
+include(__DIR__ . "/../models/Playlist.class.php");
+include(__DIR__ . "/../models/Album.class.php");
+include(__DIR__ . "/../models/Track.class.php");
+include(__DIR__ . "/../models/User.class.php");
 
 
 class WebPlaylistDB {
@@ -248,13 +247,6 @@ class WebPlaylistDB {
     } // function
 
     /* **********************************
-    *  *********** Playlists
-    *  **********************************/
-
-
-
-
-    /* **********************************
     *  *********** Users
     *  **********************************/
     public function login($username,$password)
@@ -467,6 +459,111 @@ class WebPlaylistDB {
         }
         return $search;
     }
+
+
+    /* **********************************
+    *  *********** ProposedTracks
+    *  **********************************/
+
+
+   /***
+     *
+     * Inserts a new track into the table "ProposedTracks". Note that the proposed track:
+     *     (i) is identified by $trackID,
+     *    (ii) is marked as 'Proposed' and
+     *   (iii) is initialized to 0 votes at the beginning.
+     *
+     * @param $trackID
+     *
+     */
+
+    function addProposedTrack($trackID) {
+
+        $req = $this->db->prepare('INSERT INTO proposed_tracks(trackID, status) VALUES(:trackID, :status)');
+        $req->execute(array(
+            'trackID' => $trackID,
+            'status' => 'Proposed'
+            ));
+        if ($req->errorInfo()[1]) {
+            return false;
+        }
+        return "La musique a été proposé";
+    } // function
+
+
+    /***
+     *
+     * Gets all the "tracks" that conform to a given $status. For instance:
+     *
+     *     getProposedTracks ("Playing");
+     *
+     * returns an array containing the set of tracks that are currently being played.
+     *
+     * @param $status
+     * @return array
+     *
+     */
+
+    function getProposedTracks($status) {
+
+        $proposedTracks = array();
+
+        $req = $this->db->prepare('SELECT * FROM proposed_tracks WHERE  status = :status');
+        $req->execute(array(
+            'status' => $status
+            ));
+        while ($row = $req->fetch())
+        {
+
+            $currentTrack = new ProposedTrack();
+            $currentTrack->init( $row['ID'], $row['trackID'], $row['votes'] );
+
+            $proposedTracks[ ] = $currentTrack;
+        }
+
+        return $proposedTracks;
+
+    } // function
+
+
+    /***
+     *
+     * Updates the $status of the "track" identified by $trackID
+     *
+     * @param $trackID
+     * @param $status
+     *
+     */
+
+    function updateProposedTrackWithStatus($ID, $status) {
+
+
+        $req = $this->db->prepare('UPDATE proposed_tracks SET status = :status WHERE  ID = :ID');
+        $req->execute(array(
+            'ID' => $ID,
+            'status' => $status
+            ));
+        if ($req->errorInfo()[1]) {
+            return false;
+        }
+            return true;
+    } // function
+
+
+
+    function deleteProposedTracks() {
+
+        $this->db->query($sql);
+        if ($this->db->exec("DELETE FROM proposed_tracks")) {
+            return true;
+        }
+        return false;
+    } // function
+
+
+
+
+
 
 /*
 
