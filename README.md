@@ -1,3 +1,13 @@
+Projet LTW2
+===========
+
+###User
+admin : admin
+user1 : user1
+user2 : user2
+
+
+
 # Base de données: `WebRadioDB`
 
 ![alt tag](https://raw.githubusercontent.com/ThibaudAV/TW2-ProjetFinal/master/schemaDB_SQL.png)
@@ -72,4 +82,10 @@ CREATE TABLE IF NOT EXISTS `users` (
   `role` varchar(10) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+INSERT INTO `users` (`id`, `username`, `password`, `role`) VALUES
+(1, 'admin', 'admin', 'admin'),
+(2, 'user1', 'user1', 'user'),
+(3, 'user2', 'user2', 'user');
+
 ```
