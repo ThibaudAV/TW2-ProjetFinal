@@ -163,6 +163,15 @@ Flight::route('GET /getTrack/@id', function($id){
     echo json_encode($track);
 
 });
+Flight::route('GET /getTrackAlbum/@id', function($id){
+    $request = Flight::request();
+
+    $db = new WebPlaylistDB();
+    $album = $db->getTrackAlbum($id);
+
+    echo json_encode($album);
+
+});
 Flight::route('PUT /addPlaylistTrack', function(){
     $request = Flight::request();
     $rep = json_decode($request->body);
@@ -311,6 +320,15 @@ Flight::route('POST /radio/nextTrack', function(){
 
 });
 
+Flight::route('PUT /radio/addProposedTrackVote', function(){
 
+    $request = Flight::request();
+    $webPlayerServer = new WebPlayerServer();
+
+    $proposedTrack = json_decode($request->body);
+    $webPlayerServer->addTrackVote($proposedTrack->vote,$proposedTrack->proposalID);
+
+
+});
 
 Flight::start();

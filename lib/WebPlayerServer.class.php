@@ -99,7 +99,13 @@ class WebPlayerServer {
         $this->db->deleteProposedTracks();
     } // function
 
-
+    public function addTrackVote($vote,$proposalID) {
+        if($vote >= 1){
+            $this->db->addTrackVote(1,$proposalID);
+        } else {
+            $this->db->addTrackVote(-1,$proposalID);
+        }
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //

@@ -24,9 +24,10 @@ function WebPlayerController(HTTP_HOST) {
                 // width : 800,
                 // height : 300,
                 onload : function(){
-
-                    //_this.startPlaying();
-                    //_this.updatePlaylist();
+                    _this.onPlayerLoaded();
+                    _this.startPlaying();
+                    _this.updatePlaylist();
+                    // _this.updatePlayer();
 
                 } // function
 
@@ -34,8 +35,61 @@ function WebPlayerController(HTTP_HOST) {
 
         });
 
+
     } // function
 
+
+
+    this.onPlayerLoaded = function() {
+     // this.event_listener_append('player_loaded');
+        _this = this;
+        var nextProposedTrack = false;
+
+     DZ.Event.subscribe('player_position', function(arg){
+         // this.event_listener_append('position', arg[0], arg[1]);
+         // $("#slider_seek .bar").css('width', (100*arg[0]/arg[1]) + '%');
+            var pourcentage = (100*arg[0]/arg[1]);
+         $( "#progressbar" ).progressbar( "value", pourcentage);
+        var current_sec = Math.round(arg[0]) % 60;
+        current_sec = (current_sec < 10) ? "0" + current_sec : current_sec;
+        var current_min = Math.floor(Math.round(arg[0]) / 60);
+        var total_sec = arg[1] % 60;
+        total_sec = (total_sec < 10) ? "0" + total_sec : total_sec;
+        var total_min = Math.floor(arg[1] / 60);
+        $("#chrono").text(current_min + "\"" + current_sec + " / " + total_min + "\"" + total_sec);
+
+        console.log(Math.round(pourcentage));
+        if(Math.round(pourcentage)>=95 && nextProposedTrack == false) 
+        {
+            _this.addPlayNextProposedTrack();
+            nextProposedTrack = true;
+        } else if (Math.round(pourcentage)<=5 && nextProposedTrack == true) 
+        {
+            nextProposedTrack = false;
+        }
+
+        });
+
+        DZ.Event.subscribe('current_track', function(track, evt_name){
+            _this.updatePlayer();
+
+        });
+
+
+         $( "#progressbar" ).progressbar({
+          value: false
+        });
+        $("#slider-range-min").slider({
+              orientation: "vertical",
+            range: "min",
+            value: 80,
+            min: 0,
+            max: 100,
+            slide: function(event, ui) {
+                DZ.player.setVolume(ui.value);
+            }
+        });
+    }
 
     this.startPlaying = function() {
 
@@ -64,6 +118,24 @@ function WebPlayerController(HTTP_HOST) {
 
     } // function
 
+    this.addPlayNextProposedTrack = function() {
+        var currentTrackProposalID = this.currentTrack.proposalID;
+        var nextTrack = this.webPlayerServer.getNextTrack( currentTrackProposalID );
+
+        if(nextTrack != null) {
+        var track = this.getTrackInformation(nextTrack.trackID);
+            DZ.player.addToQueue([track.deezerID]);
+
+            this.currentTrack = nextTrack;
+            console.log('addPlayNextProposedTrack :'+nextTrack);
+            this.updatePlaylist();
+
+        } else {
+            this.isPlaying = false;
+            // DZ.player.pause();
+            // <<<------ Insert a Wait HERE
+        }
+    } // function
 
     this.playNextProposedTrack = function() {
 
@@ -90,13 +162,54 @@ function WebPlayerController(HTTP_HOST) {
 
         this.isPlaying = true;
         this.currentTrack = proposedTrack;
+        console.log(proposedTrack);
+
+        // this.updatePlayer();
 
     } // function
 
 
+    this.updatePlayer = function() {
+        var ct = this.currentTrack
+
+        if(ct){
+            var trackAlbumInformation = this.getTrackAlbumInformation(ct.trackID);
+            var trackInformation = this.getTrackInformation(ct.trackID);
+
+
+            console.log(trackAlbumInformation);
+            $('#player h2').html(trackInformation.titre);
+            $('#player p.artiste').html(trackAlbumInformation.artiste);
+            $('#player img#cover').attr('src', trackAlbumInformation.coverURL);
+        } else {
+
+
+            $('#player p.artiste').html("");
+            $('#player h2').html("Ajouter des musiques a la radio");
+        }
+
+
+
+    }
     this.updatePlaylist = function() {
 
         var proposedTracks = this.webPlayerServer.getProposedTracks();
+
+
+        $('#proposedTracks ul.tracks').html("");
+
+
+        for(key in proposedTracks) {
+
+            var trackInfo = this.getTrackInformation(proposedTracks[key].trackID);
+
+            $('#proposedTracks ul.tracks').append('<li class="track" id="'+proposedTracks[key].trackID+'" >'+
+                trackInfo.titre+
+                '<i data-ID="'+proposedTracks[key].proposalID+'" data-vote="-1" class="vote fa fa-thumbs-o-down"></i>'+
+                '<i data-ID="'+proposedTracks[key].proposalID+'" data-vote="1" class="vote fa fa-thumbs-o-up">'+proposedTracks[key].numberOfVotes+'</i> </li>');
+        }
+
+/*
 
         var table = document.createElement('table');
         table.id = "proposedTracks";
@@ -131,7 +244,7 @@ function WebPlayerController(HTTP_HOST) {
         var tracks = document.getElementById("proposedTracks");
 
         playlist.replaceChild(table, tracks);
-
+*/
     } // function
 
 
@@ -155,5 +268,38 @@ function WebPlayerController(HTTP_HOST) {
 
     } // function
 
+    this.getTrackAlbumInformation = function(trackID) {
 
+        var trackAlbumInformation = null;
+
+        $.ajax({
+            url:  "getTrackAlbum/" + trackID,
+            type: "GET",
+            async: false,
+            success: function(response) {
+                trackAlbumInformation = JSON.parse(response);
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerDB.getTrack()");
+            }
+        });
+
+        return trackAlbumInformation;
+
+    } // function
+
+
+    this.addProposedTrack = function(trackID) {
+
+        this.webPlayerServer.proposeTrack(trackID);
+        this.updatePlaylist();
+
+    } // function
+
+    this.addProposedTrackVote = function( _vote, _proposalID) {
+
+        this.webPlayerServer.addProposedTrackVote(_vote , _proposalID);
+        this.updatePlaylist();
+
+    } // function
 } // function

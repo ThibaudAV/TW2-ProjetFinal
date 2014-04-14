@@ -2,7 +2,7 @@
 
 <section id="player">
 
-<img id="cover" src="https://api.deezer.com/album/7518196/image" >
+<img id="cover" src="" >
 
 	<div id="controlers">
 
@@ -10,52 +10,27 @@
 <!-- <i class="fa fa-pause"></i> -->
 
 	</div>
-	<h2>Dans ma paranoïa</h2>
-	<p class="artiste">Sexion d'Assaut</p>
-		<div id="slider_seek" class="progressbarplay" style="">
-		<div class="bar" style="width: 0%;"></div>
-	</div>
+ <div id="slider-range-min"></div>
+
+	<h2>Cliquer sur play</h2>
+	<p class="artiste"></p>
+	<div id="progressbar" ></div>
 	
-        <table id="proposedTracks"></table>
+        <div id="chrono">/</div>
+        <table id="nextTracks"></table>
 </section>
 
 <section id="playlist">
 
-<article class="playlist">
-	<h3>Blalzkadsd</h3>	
-	<ul class="tracks">
-	<li class="track" >qsdcqsdf qsdfqsd <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdfqsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdcqsdf qsdfqsd <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdfqsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdcqsdf qsdfqsd lirem qsdf qsd  qsd  qsssqdd qsd<i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdfqsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdcqsdf qsdfqsd <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdfqsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdcqsdf qsdfqsd <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdfqsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	<li class="track" >qsdf qsdf <i class="vote fa fa-thumbs-o-up"></i> <i class="vote fa fa-thumbs-o-down"></i></li>
-	</ul>
+<article id="proposedTracks" class="playlist">
+	<h3>Liste des musiques proposées</h3>	
+	<ul class="tracks"></ul>
 </article>
 
 
-
-	<?php if( isset($user->role) and ($user->role != 'user' or $user->role != 'admin')){
-			foreach ($db->getUserPlaylists($user->ID) as $playlist) {
-			?>
-			<h2><?php echo $playlist->nom; ?></h2>
-
-			<?php
-		}
-	}
-	?>
 </section>
 
-<section>
+<section id="catalogue">
 
 <?php if($user) {?>
 <nav class="center">
@@ -75,7 +50,7 @@
 		de <i><?php echo $album->artiste ?>	</i>
 		<ul class="tracks">
 		<?php foreach($album->tracks as $track ) { ?>
-		<li class="track" ><?php echo $track->titre ?><i class="add fa fa-plus-square"></i></li>
+		<li class="track" ><?php echo $track->titre ?><i data-id="<?php echo $track->ID ?>" class="add fa fa-plus-square"></i></li>
 		<?php } ?>
 		</ul>
 	</article>
@@ -103,10 +78,6 @@
 // Init du lecteur Radio
 	var webPlayer = null;
 
-	window.onload = function() {
-		webPlayer = new WebPlayerController('<?php echo $_SERVER['HTTP_HOST'];?>');
-		webPlayer.init('http://developers.deezer.com/examples/channel.php');
-	}
 
 
 
@@ -114,6 +85,11 @@
 
 
 	$(document).ready(function(){
+
+
+		webPlayer = new WebPlayerController('<?php echo $_SERVER['HTTP_HOST'];?>');
+		webPlayer.init('http://developers.deezer.com/examples/channel.php');
+
 		$("#controlers input").attr('disabled', true);
 		$("#slider_seek").click(function(evt,arg){
 			var left = evt.offsetX;
@@ -122,20 +98,31 @@
 		});
 		$("#mesPlaylists").hide();
 
-		$(document).on('click', '.mesPlaylists', function() {
+		$("section#catalogue").on('click', '.mesPlaylists', function() {
 			$("#catalogueCommun").hide();
 			$("#mesPlaylists").show();
 			majplaylists($( '#selectPlaylist' ).val());
 		});
-		$(document).on('click', '.catalogueCommun', function() {
+		$("section#catalogue").on('click', '.catalogueCommun', function() {
 			$("#mesPlaylists").hide();
 			$("#catalogueCommun").show();
 		});
 
-		$(document).on('change ','#selectPlaylist',function(){
+		$("section#catalogue").on('change ','#selectPlaylist',function(){
 			majplaylists(this.value);
 		});
 
+		$("section#catalogue").on('click','.add',function(){
+			var trackID = $( this ).attr("data-id");
+			webPlayer.addProposedTrack(trackID);
+		});
+
+
+		$("article#proposedTracks").on('click','.vote',function(){
+			var vote = $( this ).attr("data-vote");
+			var proposalID = $( this ).attr("data-ID");
+			webPlayer.addProposedTrackVote(vote , proposalID);
+		});
 
 		function majplaylists (playlistID) {
 			$.ajax({
@@ -165,7 +152,9 @@
 		}
 
 
-	});
+	});  
+
+
 	// function event_listener_append() {
 	// 	var pre = document.getElementById('event_listener');
 	// 	var line = [];

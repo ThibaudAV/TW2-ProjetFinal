@@ -246,6 +246,22 @@ class WebPlaylistDB {
 
     } // function
 
+    public function getTrackAlbum($trackID)
+    {
+        $req=$this->db->prepare("SELECT album.id, album.deezerID, album.titre,album.artiste,album.coverURL  FROM albums as album, tracks as track WHERE track.id = :trackID and track.albumID = album.id ");
+
+        $req->execute(array( 'trackID' => $trackID));
+        $_album = $req->fetch(PDO::FETCH_OBJ);
+        if ($req->errorInfo()[1]) {
+            return false;
+        }
+
+        $album = new Album();
+        $album->init( $_album->id, $_album->deezerID, $_album->titre, $_album->artiste, $_album->coverURL );
+        return $album;
+    } // function
+
+
     /* **********************************
     *  *********** Users
     *  **********************************/
@@ -508,7 +524,7 @@ class WebPlaylistDB {
 
         $proposedTracks = array();
 
-        $req = $this->db->prepare('SELECT * FROM proposed_tracks WHERE  status = :status');
+        $req = $this->db->prepare('SELECT * FROM proposed_tracks WHERE  status = :status ORDER BY votes DESC');
         $req->execute(array(
             'status' => $status
             ));
@@ -561,7 +577,19 @@ class WebPlaylistDB {
     } // function
 
 
+    function addTrackVote($vote, $proposalID) {
 
+
+        $req = $this->db->prepare('UPDATE proposed_tracks SET votes = votes + :vote WHERE  ID = :ID');
+        $req->execute(array(
+            'ID' => $proposalID,
+            'vote' => $vote
+            ));
+        if ($req->errorInfo()[1]) {
+            return false;
+        }
+            return true;
+    } // function
 
 
 

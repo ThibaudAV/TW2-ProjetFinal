@@ -5,6 +5,7 @@
 	<title><?php echo $title;
  ?></title>
 	<link rel="stylesheet" type="text/css" href="<?php echo $_SERVER['HTTP_HOST'] ?>/media/css/style.css">
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
     <script src="<?php echo $_SERVER['HTTP_HOST'] ?>/media/js/WebPlayerController.js"></script>
@@ -12,58 +13,13 @@
 
 <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 
 		<script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
 
 
-	<style type="text/css">
-		.progressbarplay {
-			cursor:pointer;
-			overflow: hidden;
-			height: 8px;
-			margin-bottom: 8px;
-			background-color: #B8B8B8;
-/*			background-image: -moz-linear-gradient(top,whiteSmoke,#F9F9F9);
-			background-image: -ms-linear-gradient(top,whiteSmoke,#F9F9F9);
-			background-image: -webkit-gradient(linear,0 0,0 100%,from(whiteSmoke),to(#F9F9F9));
-			background-image: -webkit-linear-gradient(top,whiteSmoke,#F9F9F9);
-			background-image: -o-linear-gradient(top,whiteSmoke,#F9F9F9);
-			background-image: linear-gradient(top,whiteSmoke,#F9F9F9);
-			background-repeat: repeat-x;*/
-			filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#f9f9f9',GradientType=0);
-			-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-			-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
-			box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
-			-webkit-border-radius: 6px;
-			-moz-border-radius: 6px;
-			border-radius: 6px;
 
-		}
-		.progressbarplay .bar {
-			cursor:pointer;
-			background: #4496C6;
-			width: 0;
-			height: 8px;
-			color: white;
-			font-size: 12px;
-			text-align: center;
-			text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
-			-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-			-moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);
-			box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);
-			-webkit-box-sizing: border-box;
-			-moz-box-sizing: border-box;
-			box-sizing: border-box;
-			-webkit-transition: width .6s ease;
-			-moz-transition: width .6s ease;
-			-ms-transition: width .6s ease;
-			-o-transition: width .6s ease;
-			transition: width .6s ease;
-
-		}
-	</style>
 
 </head>
 <body>

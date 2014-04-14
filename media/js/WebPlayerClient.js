@@ -97,4 +97,26 @@ function WebPlayerClient(HTTP_HOST) {
     } // function
 
 
+    this.addProposedTrackVote = function(_vote,_proposalID) {
+
+        var proposedTrack = { proposalID : _proposalID, vote : _vote };
+
+        $.ajax({
+            url:  HTTP_HOST+"/radio/addProposedTrackVote",
+            type: "PUT",
+            contentType: "application/json",
+            data: JSON.stringify(proposedTrack),
+            async: false,
+            success: function(response) {
+                console.log("Vote "+_vote+" Song: " + _proposalID );
+            },
+            error: function(xhr) {
+                console.log("Error when calling WebPlayerServer.proposeTrack()");
+            }
+        });
+
+
+    } // function
+
+
 } // function

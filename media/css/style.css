@@ -357,7 +357,7 @@ ul#catalogues .suppr:hover {
     color: #9B0000;
 }
 
-.form-field {
+    .form-field {
     width: 418px;
     margin-bottom: 20px;
     padding: 8px;
@@ -467,23 +467,24 @@ section#player #cover {
 
 section#player #controlers {
     display: inline-block;
-    width: 315px;
+    width: 215px;
     height: 105px;
     padding: 15px 0 0 0;
     text-align: center;
-    font-size: 50px;
+    font-size: 70px;
     vertical-align: top;
 }
 
 section#player #controlers a {
-    width: 70px;
-    padding: 9px 0 9px 0;
+    width: 81px;
+    padding: 9px 0 9px 9px;
     border: solid 3px #999999;
     -webkit-border-radius: 50px;
     border-radius: 50px;
     text-decoration: none;
     color: #999999;
     background-color: #FDFCFA;
+
 }
 
 section#player #controlers a:hover {
@@ -491,11 +492,6 @@ section#player #controlers a:hover {
     color: #4A4A4A;
 }
 
-section#player #controlers a.fa-play {
-    width: 81px;
-    padding-left: 9px;
-    font-size: 70px;
-}
 
 section#player h2 {
     margin: 5px 0 0 0;
@@ -583,4 +579,21 @@ article.playlist ul.tracks li.track:hover .add {
 }
 #mesPlaylists{
 	text-align: center;
+}
+
+select#selectPlaylist {
+    
+}
+
+
+#slider-range-min {
+    height:   115px;
+    display: inline-block;
+}
+
+#progressbar {
+    overflow: hidden;
+    height: 8px;
+    margin-bottom: 8px;
+    background-color: #B8B8B8;
 }
