@@ -2,13 +2,12 @@ Projet LTW2
 ===========
 
 ###User
-admin : admin
-user1 : user1
-user2 : user2
+* admin : admin
+* user1 : user1
+* user2 : user2
 
 
-
-# Base de données: `WebRadioDB`
+### Base de données: `WebRadioDB`
 
 ![alt tag](https://raw.githubusercontent.com/ThibaudAV/TW2-ProjetFinal/master/schemaDB_SQL.png)
 
