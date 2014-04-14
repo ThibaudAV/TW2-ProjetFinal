@@ -13,7 +13,7 @@
  <div id="slider-range-min"></div>
 
 	<h2>Cliquer sur play</h2>
-	<p class="artiste"></p>
+	<p class="artiste"> Ou ajoute des musiques</p>
 	<div id="progressbar" ></div>
 	
         <div id="chrono">/</div>
@@ -112,17 +112,7 @@
 			majplaylists(this.value);
 		});
 
-		$("section#catalogue").on('click','.add',function(){
-			var trackID = $( this ).attr("data-id");
-			webPlayer.addProposedTrack(trackID);
-		});
-
-
-		$("article#proposedTracks").on('click','.vote',function(){
-			var vote = $( this ).attr("data-vote");
-			var proposalID = $( this ).attr("data-ID");
-			webPlayer.addProposedTrackVote(vote , proposalID);
-		});
+		
 
 		function majplaylists (playlistID) {
 			$.ajax({

@@ -37,68 +37,7 @@
 <script>
 function initDivMP () {
 	
-	$( "div.miniPlayer" ).on({
-		mouseenter: function() {
-			var track = $( this ).attr("data-id");
-			if(DZ.player.getCurrentTrack()){
-				if(DZ.player.getCurrentTrack().id == track) {
-					if(DZ.player.isPlaying())
-					{
-						$(this).find("i.fa-play").removeClass('fa-play').addClass('fa-pause');
-					} else {
-						$(this).find("i.fa-pause").removeClass('fa-pause').addClass('fa-play');
-					}
-				} else {
-					$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-				}
-			} else {
-				$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-			}
-		},mouseleave: function() {
-			var track = $( this ).attr("data-id");
-			// console.log("miniPlayer mouseleave");
-			if(DZ.player.getCurrentTrack()){
-				if(DZ.player.getCurrentTrack().id == track) {
-					if(DZ.player.isPlaying())
-					{
-						$(this).find("i.fa-pause").removeClass('fa-pause').addClass('fa-play');
-					} else {
-						$(this).find("i.fa-play").removeClass('fa-play').addClass('fa-pause');
-					}
-				} else {
-					$(this).html('');
-				}
-			} else {
-				$(this).html('');
-			}
-		},'click': function(){
-			var track = $( this ).attr("data-id");
-			if(DZ.player.getCurrentTrack()){
-				if(DZ.player.getCurrentTrack().id == track) {
-					if(DZ.player.isPlaying())
-					{
-						DZ.player.pause();
-						$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-play fa-stack-1x fa-inverse"></i></span>');
-					} else {
-						DZ.player.play();
-						$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
-					}
-				} else {
-					$( "div.miniPlayer" ).html('');
-					$('.miniPlayer').removeClass('on');
-					$(this).addClass('on');
-					DZ.player.playTracks([track]);
-					$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
-				}
-			} else {
-				$( "div.miniPlayer" ).html('');
-				$('.miniPlayer').removeClass('on');
-				$(this).addClass('on');
-				DZ.player.playTracks([track]);
-				$(this).html('<span class="fa-stack fa-lg"><i class="fa fa-circle fa-stack-2x"></i><i class="fa fa-pause fa-stack-1x fa-inverse"></i></span>');
-			}
-		}
-	});
+	
 	$( ".addCatalogue" ).click(function() {
 		var track_id = $( this ).attr("data-id");
 
