@@ -1,8 +1,8 @@
 
 
-function WebPlayerController(HTTP_HOST) {
+function WebPlayerController() {
 
-	this.webPlayerServer = new WebPlayerClient(HTTP_HOST);
+	this.webPlayerServer = new WebPlayerClient();
 	this.appID = "112661";
 
 	this.currentTrack = null;

@@ -2,7 +2,7 @@
 	
 
 	<h2>Créer une playlist</h2>
-	<form method="POST" id="formAddPlaylist" action="<?php echo $_SERVER['HTTP_HOST'] ?>/addPlaylist">
+	<form method="POST" id="formAddPlaylist" action="addPlaylist">
 	Nom de la playliste : <input type="text" name="nomplayliste" id="">
 	<input type="submit" value="Ajouter">
 	</form>
@@ -50,7 +50,7 @@ function initDivMP () {
 
 			$.ajax({
 				type: "PUT",
-				url: "<?php echo $_SERVER['HTTP_HOST'];?>/addAlbum",
+				url: "addAlbum",
 				contentType: 'application/json',
 				data: JSON.stringify({ 
 					deezerID: json.album.id,
@@ -86,7 +86,7 @@ $(document).ready(function() {
 		var playlist_ID = $( '#selectPlaylist' ).val();
 		$.ajax({
 			type: "PUT",
-			url: "<?php echo $_SERVER['HTTP_HOST'];?>/addPlaylistTrack",
+			url: "addPlaylistTrack",
 			contentType: 'application/json',
 			data: JSON.stringify({ 
 				trackID: track_id,
@@ -113,7 +113,7 @@ $(document).ready(function() {
 
 			$.ajax({
 				type: "DELETE",
-				url: "<?php echo $_SERVER['HTTP_HOST'];?>/supprPlaylistTrack",
+				url: "supprPlaylistTrack",
 				contentType: 'application/json',
 				data: JSON.stringify({ 
 					trackID: track_id,
@@ -146,7 +146,7 @@ majCatalogues($( '#selectPlaylist' ).val())
 function majCatalogues (playlistID) {
 	$.ajax({
 			type: "GET",
-			url: "<?php echo $_SERVER['HTTP_HOST'];?>/getPlaylist",
+			url: "getPlaylist",
 			contentType: 'application/json',
 			data: {ID: playlistID},
 			dataType: 'json',
@@ -176,7 +176,7 @@ function search(){
 
 			$.ajax({
 				type: "GET",
-				url: "<?php echo $_SERVER['HTTP_HOST'];?>/search",
+				url: "search",
 				contentType: 'application/json',
 				data: {search: _search},
 				dataType: 'json',
