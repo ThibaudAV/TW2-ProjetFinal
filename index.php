@@ -27,7 +27,7 @@ Flight::route('/playlist', function(){
 
     $db = new WebPlaylistDB();
     $user = $db->getUser();
-     if( !isset($user->role) or ($user->role != 'user' and $user->role != 'admin')){
+    if( !isset($user->role) or ($user->role != 'user' and $user->role != 'admin')){
         Flight::redirect($_SERVER['HTTP_HOST'].'/');
         exit;
      } 
@@ -41,7 +41,7 @@ Flight::route('/admin', function(){
 
     $db = new WebPlaylistDB();
     $user = $db->getUser();
-    if($user->isAdmin()){
+    if(isset($user->role) and ($user->role == 'admin')){
         Flight::render('admin', array( 'user' => $user), 'body_content');
         
         Flight::render('layout', array('page' => 'admin','title' => 'TW2 - Projet','user'=>$user));
@@ -57,7 +57,7 @@ Flight::route('/admin/users', function(){
     $db = new WebPlaylistDB();
     $user = $db->getUser();
     $users = $db->getUsers();
-    if($user->isAdmin()){
+    if(isset($user->role) and ( $user->role == 'admin')){
         Flight::render('users', array( 'users' => $users), 'body_content');
     
         Flight::render('layout', array('page' => 'admin','title' => 'TW2 - Projet','user'=>$user));
@@ -72,10 +72,13 @@ Flight::route('/admin/collection', function(){
     $db = new WebPlaylistDB();
     $albums = $db->getAlbums();
     $user = $db->getUser();
-    Flight::render('collection', array( 'albums' => $albums), 'body_content');
-    
-    Flight::render('layout', array('page' => 'collection','title' => 'TW2 - Projet','user'=>$user));
-
+    if(isset($user->role) and ( $user->role == 'admin')){
+        Flight::render('collection', array( 'albums' => $albums), 'body_content');
+        
+        Flight::render('layout', array('page' => 'collection','title' => 'TW2 - Projet','user'=>$user));
+    }else {
+        Flight::redirect($_SERVER['HTTP_HOST'].'/');
+    }
 });
 
 Flight::route('POST /addPlaylist', function(){

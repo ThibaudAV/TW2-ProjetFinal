@@ -9,7 +9,7 @@
 
 </div>
 <div id="c2">
-	<h2>Mon Catalogue</h2>
+	<h2>Catalogue commun</h2>
 	<div id="catalogues">
 		<?php  foreach($albums as $album ) {?>
 		<article class="album">

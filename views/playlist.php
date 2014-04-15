@@ -1,7 +1,7 @@
 <section>
 	
 
-	<h2>Créer une playliste</h2>
+	<h2>Créer une playlist</h2>
 	<form method="POST" id="formAddPlaylist" action="<?php echo $_SERVER['HTTP_HOST'] ?>/addPlaylist">
 	Nom de la playliste : <input type="text" name="nomplayliste" id="">
 	<input type="submit" value="Ajouter">

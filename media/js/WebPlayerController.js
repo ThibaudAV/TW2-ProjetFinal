@@ -72,6 +72,7 @@ function WebPlayerController(HTTP_HOST) {
 
 		DZ.Event.subscribe('current_track', function(track, evt_name){
 			_this.updatePlayer();
+			console.log('current_track');
 		});
 
 
@@ -99,6 +100,11 @@ function WebPlayerController(HTTP_HOST) {
 			var proposalID = $( this ).attr("data-ID");
 			_this.addProposedTrackVote(vote , proposalID);
 		});
+		// on actualise toutes les 5s
+		setInterval(function() {
+			_this.updatePlaylist();
+			console.log('coucou');
+		}, 5000);
 	}
 
 	this.startPlaying = function() {
@@ -134,8 +140,9 @@ function WebPlayerController(HTTP_HOST) {
 
 		if(nextTrack != null) {
 		var track = this.getTrackInformation(nextTrack.trackID);
-			DZ.player.addToQueue([track.deezerID]);
 
+			this.isPlaying = true;
+			DZ.player.addToQueue([track.deezerID]);
 			this.currentTrack = nextTrack;
 			console.log('addPlayNextProposedTrack :'+nextTrack);
 			this.updatePlaylist();
@@ -202,10 +209,9 @@ function WebPlayerController(HTTP_HOST) {
 
 	}
 	this.updatePlaylist = function() {
-
 		var proposedTracks = this.webPlayerServer.getProposedTracks();
 
-
+		console.log('updatePlaylist');
 		$('#proposedTracks ul.tracks').html("");
 
 
