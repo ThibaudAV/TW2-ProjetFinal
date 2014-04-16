@@ -48,7 +48,7 @@ Flight::route('/admin', function(){
         
         Flight::render('layout', array('page' => 'admin','title' => 'TW2 - Projet','user'=>$user));
     }else {
-        Flight::redirect('');
+        Flight::redirect('accueil');
     }
 });
 
