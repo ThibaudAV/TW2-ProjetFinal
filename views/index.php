@@ -80,14 +80,10 @@
 
 
 
-
-
-
-
 	$(document).ready(function(){
 
 
-		webPlayer = new WebPlayerController('<?php echo $_SERVER['HTTP_HOST'];?>');
+		webPlayer = new WebPlayerController();
 		webPlayer.init('http://developers.deezer.com/examples/channel.php');
 
 		$("#controlers input").attr('disabled', true);
@@ -117,7 +113,7 @@
 		function majplaylists (playlistID) {
 			$.ajax({
 				type: "GET",
-				url: "<?php echo $_SERVER['HTTP_HOST'];?>/getPlaylist",
+				url: "getPlaylist",
 				contentType: 'application/json',
 				data: {ID: playlistID},
 				dataType: 'json',

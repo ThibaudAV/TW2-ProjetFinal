@@ -135,7 +135,7 @@ function initDivMP () {
 
 			$.ajax({
 				type: "PUT",
-				url: "<?php echo $_SERVER['HTTP_HOST'];?>/addAlbum",
+				url: "addAlbum",
 			    contentType: 'application/json',
 			    data: JSON.stringify({ 
 			    	deezerID: json.album.id,
@@ -172,7 +172,7 @@ function initDivMP () {
 			});
 
 /*
-			var jqxhr = $.post( "<?php echo $_SERVER['HTTP_HOST'];?>/addTrack", { 
+			var jqxhr = $.post( "addTrack", { 
 				action: "add", id: track_id, titre: track_titre, preview: track_preview,album: track_album,album_cover:track_album_cover,artist:track_artist }, function(res) {
 
 				if(res.type == 'success') {
@@ -210,7 +210,7 @@ $(document).ready(function() {
 
 		$.ajax({
 			type: "DELETE",
-			url: "<?php echo $_SERVER['HTTP_HOST'];?>/supprTrack",
+			url: "supprTrack",
 		    contentType: 'application/json',
 		    data: JSON.stringify({ 
 		    	ID: track_id,
@@ -236,7 +236,7 @@ $(document).ready(function() {
 
 				$.ajax({
 					type: "DELETE",
-					url: "<?php echo $_SERVER['HTTP_HOST'];?>/supprAlbum",
+					url: "supprAlbum",
 				    contentType: 'application/json',
 				    data: JSON.stringify({ 
 				    	ID: track_id,
@@ -265,7 +265,7 @@ $(document).ready(function() {
 function majCatalogues () {
 	$.ajax({
 		type: "GET",
-		url: "<?php echo $_SERVER['HTTP_HOST'];?>/getAlbums",
+		url: "getAlbums",
 		contentType: 'application/json',
 		dataType: 'json',
 	})

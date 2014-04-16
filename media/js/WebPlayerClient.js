@@ -8,14 +8,14 @@
 ////////////////////////////////////////////////////////////////////////////////////
 
 
-function WebPlayerClient(HTTP_HOST) {
+function WebPlayerClient() {
 
 
     this.getCurrentTrack = function() {
 
         var currentTrack = null;
         $.ajax({
-            url:  HTTP_HOST+"/radio/currentTrack",
+            url:  "radio/currentTrack",
             type: "GET",
             async: false,
             success: function(response) {
@@ -36,7 +36,7 @@ function WebPlayerClient(HTTP_HOST) {
         var proposedTracks = new Array();
 
         $.ajax({
-            url:  HTTP_HOST+"/radio/proposedTracks",
+            url:  "radio/proposedTracks",
             type: "GET",
             async: false,
             success: function(response) {
@@ -57,7 +57,7 @@ function WebPlayerClient(HTTP_HOST) {
         var nextTrack = null;
 
         $.ajax({
-            url:  HTTP_HOST+"/radio/nextTrack",
+            url:  "radio/nextTrack",
             type: "POST",
             data: { "previousTrackProposalID" : previousTrackProposalID },
             async: false,
@@ -80,7 +80,7 @@ function WebPlayerClient(HTTP_HOST) {
         var proposedTrack = { trackID : trackID };
 
         $.ajax({
-            url:  HTTP_HOST+"/radio/proposedTracks",
+            url:  "radio/proposedTracks",
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(proposedTrack),
@@ -102,7 +102,7 @@ function WebPlayerClient(HTTP_HOST) {
         var proposedTrack = { proposalID : _proposalID, vote : _vote };
 
         $.ajax({
-            url:  HTTP_HOST+"/radio/addProposedTrackVote",
+            url:  "radio/addProposedTrackVote",
             type: "PUT",
             contentType: "application/json",
             data: JSON.stringify(proposedTrack),

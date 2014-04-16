@@ -10,15 +10,18 @@ require("lib/WebPlayerServer.class.php");
 
 
 
-
-
 Flight::route('/', function(){
 
-	$db = new WebPlaylistDB();
+        Flight::redirect('accueil');
+});
+
+Flight::route('/accueil', function(){
+    $db = new WebPlaylistDB();
     $user = $db->getUser();
     Flight::render('index', array( 'db' => $db,'user'=>$user), 'body_content');
 
     Flight::render('layout', array('page' => 'index','title' => 'TW2 - Projet','user'=>$user));
+
 
 });
 
@@ -27,7 +30,7 @@ Flight::route('/playlist', function(){
     $db = new WebPlaylistDB();
     $user = $db->getUser();
     if( !isset($user->role) or ($user->role != 'user' and $user->role != 'admin')){
-        Flight::redirect($_SERVER['HTTP_HOST'].'/');
+        Flight::redirect('accueil');
         exit;
      } 
     Flight::render('playlist', array( 'db' => $db), 'body_content');
@@ -45,12 +48,12 @@ Flight::route('/admin', function(){
         
         Flight::render('layout', array('page' => 'admin','title' => 'TW2 - Projet','user'=>$user));
     }else {
-        Flight::redirect($_SERVER['HTTP_HOST'].'/');
+        Flight::redirect('');
     }
 });
 
 
-Flight::route('/admin/users', function(){
+Flight::route('/adminUsers', function(){
 
 
     $db = new WebPlaylistDB();
@@ -61,12 +64,12 @@ Flight::route('/admin/users', function(){
     
         Flight::render('layout', array('page' => 'admin','title' => 'TW2 - Projet','user'=>$user));
     }else {
-        Flight::redirect($_SERVER['HTTP_HOST'].'/');
+        Flight::redirect('accueil');
     }
 
 });
 
-Flight::route('/admin/collection', function(){
+Flight::route('/adminCollection', function(){
 
     $db = new WebPlaylistDB();
     $albums = $db->getAlbums();
@@ -76,7 +79,7 @@ Flight::route('/admin/collection', function(){
         
         Flight::render('layout', array('page' => 'collection','title' => 'TW2 - Projet','user'=>$user));
     }else {
-        Flight::redirect($_SERVER['HTTP_HOST'].'/');
+        Flight::redirect('accueil');
     }
 });
 
@@ -87,14 +90,14 @@ Flight::route('POST /addPlaylist', function(){
     $db = new WebPlaylistDB();
 
     $rep = $db->setUserPlaylists($db->getUser()->ID,$request->data->nomplayliste);
-    Flight::redirect($_SERVER['HTTP_HOST'].'/playlist');
+    Flight::redirect('/playlist');
 });
 
 
 Flight::route('/logout', function(){
     $_SESSION['WP_Login_UN'] = '';
     $_SESSION['WP_Login_PW'] = '';
-    Flight::redirect($_SERVER['HTTP_HOST'].'/');
+    Flight::redirect('accueil');
 
 });
 
