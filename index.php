@@ -4,7 +4,6 @@ session_start();
 require('lib/flight/Flight.php');
 require("lib/WebPlaylistDB.class.php");
 require("lib/WebPlayerServer.class.php");
-$_SERVER['HTTP_HOST'] = $_SERVER['HTTP_REFERER'];
 
 
 	// Flight::render('layout', array('title' => 'TW2 - Projet'));
