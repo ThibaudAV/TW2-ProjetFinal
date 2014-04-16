@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title><?php echo $title;
  ?></title>
-	<link rel="stylesheet" type="text/css" href="media/css/style.css">
+	<link id="MyCss" rel="stylesheet" type="text/css" href="media/css/style.css">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
@@ -86,6 +86,7 @@
 					<input type="submit" value="Connexion">
 				</form>
 			<?php } ?>
+			<a href="#" id="changeCSS" class="fa fa-music">Change</a>
 			</div>
 			<nav>
 
@@ -116,6 +117,17 @@
 	
 	$(document).ready(function() {
 		// lorsque je soumets le formulaire
+		var changeCSS = false;
+		$('#connexion').on('click', '#changeCSS', function(event) {
+			if(changeCSS) {
+				$('link[id=MyCss]').attr('href','media/css/style.css');
+				changeCSS = false;
+			} else {
+				$('link[id=MyCss]').attr('href','media/css/style2.css');
+				changeCSS = true;
+			}
+			/* Act on the event */
+		});
 		$('#formConnexion').on('submit', function() {
 				var $this = $(this);
  
