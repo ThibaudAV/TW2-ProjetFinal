@@ -1,12 +1,12 @@
 body {
-    font-family: "Helvetica",  sans-serif;
+    font-family: "Source Sans Pro",  sans-serif;
     color: #181818;
     background: url('../images/fond.jpg');
 }
 
 div#contenaire {
     display: block;
-    width: 912px;
+    width: 100%;
     margin: auto;
 }
 
@@ -23,8 +23,8 @@ header {
 
 header #contenu {
     display: inline-block;
-    width: 565px;
-    height: 125px;
+    /*width: 565px;
+    height: 125px;*/
     vertical-align: top;
 }
 
@@ -33,32 +33,48 @@ header #titre {
     width: 330px;
     height: 125px;
     margin: 0 0 0 10px;
+    margin-left: 40%;
+    color: #197D62;
+    
+
 }
 
 header h1 {
     margin: 10px 5px 5px 10px;
-    font-size: 4em;
+    font-size: 3em;
+    text-transform : uppercase;
+    font-weight: 700;
 }
 
 header h2 {
     margin: 5px 5px 5px 30px;
     color: #505050;
+    text-transform : uppercase;
 }
 
 header #connexion {
-    width: 565px;
-    height: 45px;
-    margin: 0;
+    /*width: 565px;
+    height: 45px;*/
+    display: inline-block;
+    margin-left: 75%;
     padding-top: 20px;
-    text-align: center;
+   /* text-align: right;*/
+}
+
+header #connexion input{
+    display: block;
 }
 
 header nav {
 /*   display: inline-block;
 vertical-align: top;*/
 
-    width: 565px;
+    width: 100%;
     padding-top: 5px;
+    margin-left: 52%;
+    font-size: 1em;
+    font-weight: 300;
+
 }
 nav.center {
 	text-align: center;
@@ -69,25 +85,37 @@ nav.center {
 }
 
  nav li {
-    display: inline-block;
+    /*display: inline-block;
     margin-right: 15px;
+    text-transform : uppercase;*/
+    display: inline-block;
+    margin-left: 1px;
+    /*padding: 0em 1.5em;*/
+    padding: 2%;
+    letter-spacing: 0.10em;
+    text-decoration: none;
+    font-size: 1em;
+    text-transform: uppercase;
+    outline: 0;
+    line-height: 60px;
 }
 
  nav a {
     padding-bottom: 3px;
     text-decoration: none;
-    font-size: 1.5em;
-    color: #2994B6;
+    font-size: 1em;
+    color: #197D62;;
 }
 
  nav a:hover {
-    border-bottom: 3px solid #760001;
-    color: #A98950;
+   /* border-bottom: 3px solid #760001;*/
+    color: #000000;
 }
 
  nav .select {
-    border-bottom: 3px solid #760001;
-    color: #3F2202;
+    /*border-bottom: 3px solid #760001;*/
+    color: #FFFFFF;
+    background-color: #197D62;
 }
 
 section {
