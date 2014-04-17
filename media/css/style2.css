@@ -1,12 +1,12 @@
 body {
-    font-family: "Times New Roman",  sans-serif;
+    font-family: "Helvetica",  sans-serif;
     color: #181818;
     background: url('../images/fond.jpg');
 }
 
 div#contenaire {
     display: block;
-    width: 911px;
+    width: 912px;
     margin: auto;
 }
 
