@@ -1,7 +1,7 @@
 body {
     font-family: "Source Sans Pro",  sans-serif;
     color: #181818;
-    background: url('../images/fond.jpg');
+    background-color: #197D62;
 }
 
 div#contenaire {
@@ -12,13 +12,13 @@ div#contenaire {
 
 header {
     display: block;
-    -webkit-border-radius: 9px;
+    /*-webkit-border-radius: 9px;
     -moz-border-radius: 9px;
-    border-radius: 9px;
+    border-radius: 9px;*/
     background-color: #fff;
-    -webkit-box-shadow: 0 0 7px #000000;
+   /* -webkit-box-shadow: 0 0 7px #000000;
     -moz-box-shadow: 0 0 7px #000000;
-    box-shadow: 0 0 7px #000000;
+    box-shadow: 0 0 7px #000000;*/
 }
 
 header #contenu {
