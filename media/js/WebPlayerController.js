@@ -58,7 +58,7 @@ function WebPlayerController() {
 			var total_min = Math.floor(arg[1] / 60);
 			$("#chrono").text(current_min + "\"" + current_sec + " / " + total_min + "\"" + total_sec);
 
-			console.log(Math.round(pourcentage));
+			// console.log(Math.round(pourcentage));
 			if(Math.round(pourcentage)>=95 && nextProposedTrack == false) 
 			{
 				_this.addPlayNextProposedTrack();
@@ -103,7 +103,7 @@ function WebPlayerController() {
 		// on actualise toutes les 5s
 		setInterval(function() {
 			_this.updatePlaylist();
-			console.log('coucou');
+			// console.log('coucou');
 		}, 5000);
 	}
 

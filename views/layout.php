@@ -17,6 +17,7 @@
 	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.min.js"></script>
 
 		<script type="text/javascript" src="http://cdn-files.deezer.com/js/min/dz.js"></script>
+    <script src="media/js/jquery.cookie.js"></script>
 
 
 	<style type="text/css">
@@ -86,7 +87,7 @@
 					<input type="submit" value="Connexion">
 				</form>
 			<?php } ?>
-			<a href="#" id="changeCSS" class="fa fa-music">Change</a>
+			
 			</div>
 			<nav>
 
@@ -111,20 +112,26 @@
 	<?php echo $body_content;
  ?>
 
+<section id="footer">
+	<a href="#" id="changeCSS" class="fa fa-repeat">Changer de CSS</a>
+</section>
 </div>
+
 
 <script>
 	
 	$(document).ready(function() {
 		// lorsque je soumets le formulaire
-		var changeCSS = false;
-		$('#connexion').on('click', '#changeCSS', function(event) {
-			if(changeCSS) {
+		$.cookie('changeCSS', 'false');
+		$('#footer').on('click', '#changeCSS', function(event) {
+			var changeCSS = $.cookie('changeCSS');
+			console.log("merde"+changeCSS);
+			if(changeCSS == 'true') {
 				$('link[id=MyCss]').attr('href','media/css/style.css');
-				changeCSS = false;
+				$.cookie('changeCSS', 'false');
 			} else {
 				$('link[id=MyCss]').attr('href','media/css/style2.css');
-				changeCSS = true;
+				$.cookie('changeCSS', 'true');
 			}
 			/* Act on the event */
 		});
