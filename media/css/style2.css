@@ -97,7 +97,12 @@ nav .center
 }
 
  .center a {
+    color: #FFFFFF;
+    padding-right: 75px;
+}
 
+.center a:hover{
+    color: #197D62;
 }
 
  nav a:hover {
@@ -119,10 +124,10 @@ section {
     display: inline-block;
 
     margin-top: 10px;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 9px 10px 9px;
     
     background-color: #383838;
-    color: #485B5B;
+    color: #6c6c6c;
 }
 
 /* Catalogue */
@@ -148,16 +153,16 @@ section h2 {
 section#player {
     display: inline-block;
     width: 24%;
-    height: 300px;
+    min-height: 700px;
     vertical-align: top;
 }
 
 section#playlist {
     display: inline-block;
     width: 24%;
-    height: 500px;
+    min-height: 700px;
     /*padding-right: 0px;*/
-    overflow-y: scroll;
+   /* overflow-y: scroll;*/
     vertical-align: top;
 }
 
@@ -519,14 +524,14 @@ section#player h2 {
     padding: 10px 0 5px 0;
     border-top: solid 1px #999999;
     text-align: center;
-    color: #3A3A3A;
+    color: #FFFFFF;
 }
 
 section#player p.artiste {
     margin: 5px 0 5px 0;
     text-align: center;
     font-style: italic;
-    color: #4A4A4A;
+    color: #6c6c6c;
 }
 
 article.playlist {
@@ -629,6 +634,11 @@ select#selectPlaylist {
     line-height: 50px;
     color: #197D62;
     float : bottom;
+    border-top: solid 5px #197D62;
+
+
+    position:fixed; /* permet de fixer le pied de page */ 
+    bottom:0; /* dire au pied de page que sa position et tout en bas */ 
 }
 
 #footer a{
@@ -638,7 +648,6 @@ select#selectPlaylist {
 
 #catalogue
 {
-    height: 500px;
-   overflow-y: scroll;
+    min-height: 700px;
        width: 48%;
 }
