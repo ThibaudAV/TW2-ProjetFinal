@@ -125,7 +125,7 @@
 		$.cookie('changeCSS', 'false');
 		$('#footer').on('click', '#changeCSS', function(event) {
 			var changeCSS = $.cookie('changeCSS');
-			console.log("merde"+changeCSS);
+			//console.log("merde"+changeCSS);
 			if(changeCSS == 'true') {
 				$('link[id=MyCss]').attr('href','media/css/style.css');
 				$.cookie('changeCSS', 'false');
