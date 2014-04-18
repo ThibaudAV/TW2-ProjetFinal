@@ -5,35 +5,23 @@ body {
 }
 
 div#contenaire {
-    display: block;
-    width: 100%;
-    margin: auto;
+    
 }
 
 header {
-    display: block;
-    /*-webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;*/
+  
     background-color: #fff;
-   /* -webkit-box-shadow: 0 0 7px #000000;
-    -moz-box-shadow: 0 0 7px #000000;
-    box-shadow: 0 0 7px #000000;*/
+   
 }
 
 header #contenu {
-    display: inline-block;
-    /*width: 565px;
-    height: 125px;*/
-    vertical-align: top;
+    display: flex;
+    flex-direction : row-reverse;
+
 }
 
 header #titre {
-    display: inline-block;
-    width: 330px;
-    height: 125px;
-    margin: 0 0 0 10px;
-    margin-left: 40%;
+
     color: #197D62;
     
 
@@ -41,7 +29,7 @@ header #titre {
 
 header h1 {
     margin: 10px 5px 5px 10px;
-    font-size: 3em;
+    font-size: 4em;
     text-transform : uppercase;
     font-weight: 700;
 }
@@ -53,12 +41,7 @@ header h2 {
 }
 
 header #connexion {
-    /*width: 565px;
-    height: 45px;*/
-    display: inline-block;
-    margin-left: 75%;
-    padding-top: 20px;
-   /* text-align: right;*/
+
 }
 
 header #connexion input{
@@ -66,19 +49,13 @@ header #connexion input{
 }
 
 header nav {
-/*   display: inline-block;
-vertical-align: top;*/
-
-    width: 100%;
-    padding-top: 5px;
-    margin-left: 52%;
     font-size: 1em;
     font-weight: 300;
 
 }
-nav.center {
+/*nav.center {
 	text-align: center;
-}
+}*/
 
  nav ul {
     list-style-type: none;
