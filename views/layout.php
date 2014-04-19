@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title><?php echo $title;
  ?></title>
-	<link id="MyCss" rel="stylesheet" type="text/css" href="media/css/style.css">
+	<link id="MyCss" rel="stylesheet" type="text/css" href="media/css/<?php echo ($_COOKIE['changeCSS']) ? $_COOKIE['changeCSS'] : 'style.css' ; ?>">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
@@ -121,20 +121,24 @@
 <script>
 	
 	$(document).ready(function() {
+
+
+
 		// lorsque je soumets le formulaire
-		$.cookie('changeCSS', 'false');
 		$('#footer').on('click', '#changeCSS', function(event) {
 			var changeCSS = $.cookie('changeCSS');
-			console.log("changeCSS");
-			if(changeCSS == 'true') {
+			if(changeCSS == 'style2.css') {
 				$('link[id=MyCss]').attr('href','media/css/style.css');
-				$.cookie('changeCSS', 'false');
+				$.cookie('changeCSS', 'style.css');
 			} else {
 				$('link[id=MyCss]').attr('href','media/css/style2.css');
-				$.cookie('changeCSS', 'true');
+				$.cookie('changeCSS', 'style2.css');
 			}
 			/* Act on the event */
 		});
+
+		
+
 		$('#formConnexion').on('submit', function() {
 				var $this = $(this);
  

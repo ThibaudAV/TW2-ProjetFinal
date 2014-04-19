@@ -2,38 +2,33 @@ body {
     font-family: "Source Sans Pro",  sans-serif;
     color: #181818;
     background-color: #197D62;
+    margin: 0;
 }
 
 div#contenaire {
-    display: block;
     width: 100%;
-    margin: auto;
+    padding: 0;
+    
 }
 
 header {
-    display: block;
-    /*-webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;*/
+    display: inline-block;
+    width: 100%;
     background-color: #fff;
-   /* -webkit-box-shadow: 0 0 7px #000000;
-    -moz-box-shadow: 0 0 7px #000000;
-    box-shadow: 0 0 7px #000000;*/
+   
 }
 
 header #contenu {
-    display: inline-block;
-    /*width: 565px;
-    height: 125px;*/
+    width: 72%;
+  /*float: right;*/
     vertical-align: top;
+    padding-top: 20px;
+    margin-left: 25%;
+
 }
 
 header #titre {
-    display: inline-block;
-    width: 330px;
-    height: 125px;
-    margin: 0 0 0 10px;
-    margin-left: 40%;
+    float: left;
     color: #197D62;
     
 
@@ -41,7 +36,7 @@ header #titre {
 
 header h1 {
     margin: 10px 5px 5px 10px;
-    font-size: 3em;
+    font-size: 3.5em;
     text-transform : uppercase;
     font-weight: 700;
 }
@@ -53,12 +48,7 @@ header h2 {
 }
 
 header #connexion {
-    /*width: 565px;
-    height: 45px;*/
-    display: inline-block;
-    margin-left: 75%;
-    padding-top: 20px;
-   /* text-align: right;*/
+ float: right;
 }
 
 header #connexion input{
@@ -66,18 +56,11 @@ header #connexion input{
 }
 
 header nav {
-/*   display: inline-block;
-vertical-align: top;*/
-
-    width: 100%;
-    padding-top: 5px;
-    margin-left: 52%;
+    vertical-align: bottom;
+    margin-right: 30%;
     font-size: 1em;
     font-weight: 300;
 
-}
-nav.center {
-	text-align: center;
 }
 
  nav ul {
@@ -85,26 +68,41 @@ nav.center {
 }
 
  nav li {
-    /*display: inline-block;
-    margin-right: 15px;
-    text-transform : uppercase;*/
     display: inline-block;
     margin-left: 1px;
+    margin-right: 15px;
     /*padding: 0em 1.5em;*/
-    padding: 2%;
+    padding-top: 6.5%;
     letter-spacing: 0.10em;
     text-decoration: none;
     font-size: 1em;
     text-transform: uppercase;
     outline: 0;
-    line-height: 60px;
+}
+nav .center
+{
+    width: 90%;
+    margin-right: 30%;
+    font-size: 1em;
+    font-weight: 300;
 }
 
+
+
  nav a {
-    padding-bottom: 3px;
+    padding : 20px;
     text-decoration: none;
     font-size: 1em;
-    color: #197D62;;
+    color: #197D62;
+}
+
+ .center a {
+    color: #FFFFFF;
+    padding-right: 75px;
+}
+
+.center a:hover{
+    color: #197D62;
 }
 
  nav a:hover {
@@ -112,25 +110,22 @@ nav.center {
     color: #000000;
 }
 
- nav .select {
+ nav .select{
     /*border-bottom: 3px solid #760001;*/
     color: #FFFFFF;
     background-color: #197D62;
 }
 
+li! > .select{
+       background-color: #197D62; 
+}
+
 section {
-    display: block;
-    width: 900px;
+   display: inline-block;
     margin-top: 10px;
-    padding: 10px 5px 10px 5px;
-    -webkit-border-radius: 9px;
-    -moz-border-radius: 9px;
-    border-radius: 9px;
-    background-color: #EEEEEE;
-    background-color: #F5F2EF;
-    -webkit-box-shadow: 0 0 7px #000000;
-    -moz-box-shadow: 0 0 7px #000000;
-    box-shadow: 0 0 7px #000000;
+    padding: 10px 9px 10px 9px; 
+    background-color: #383838;
+    color: #6c6c6c;
 }
 
 /* Catalogue */
@@ -140,6 +135,7 @@ section #c1 {
     width: 435px;
     padding: 10px 5px 10px 5px;
     vertical-align: top;
+
 }
 
 section #c2 {
@@ -154,17 +150,17 @@ section h2 {
 
 section#player {
     display: inline-block;
-    width: 443px;
-    height: 300px;
+    width: 24%;
+    min-height: 700px;
     vertical-align: top;
 }
 
 section#playlist {
     display: inline-block;
-    width: 443px;
-    height: 300px;
+    width: 24%;
+    min-height: 700px;
     /*padding-right: 0px;*/
-    overflow-y: scroll;
+   /* overflow-y: scroll;*/
     vertical-align: top;
 }
 
@@ -407,7 +403,7 @@ ul#catalogues .suppr:hover {
 
 article.album {
     display: inline-block;
-    width: 430px;
+    width: 47%;
     margin: 0 2px 10px 2px;
     padding: 5px 5px 10px 5px;
     border: solid 1px #C5C5C5;
@@ -451,9 +447,9 @@ article.album ul.tracks li.track:hover {
 
 article.album ul.tracks li.track .add {
 /*
-	position: absolute;
-	top: 0;
-	right:0;*/
+    position: absolute;
+    top: 0;
+    right:0;*/
 
     float: right;
     margin-right: -10px;
@@ -526,19 +522,19 @@ section#player h2 {
     padding: 10px 0 5px 0;
     border-top: solid 1px #999999;
     text-align: center;
-    color: #3A3A3A;
+    color: #FFFFFF;
 }
 
 section#player p.artiste {
     margin: 5px 0 5px 0;
     text-align: center;
     font-style: italic;
-    color: #4A4A4A;
+    color: #6c6c6c;
 }
 
 article.playlist {
     display: inline-block;
-    width: 410px;
+    width: 95%;
     margin: 0 2px 10px 2px;
     padding: 5px 5px 10px 5px;
     border: solid 1px #C5C5C5;
@@ -606,7 +602,7 @@ article.playlist ul.tracks li.track:hover .add {
     color: #4A4A4A;
 }
 #mesPlaylists{
-	text-align: center;
+    text-align: center;
 }
 
 select#selectPlaylist {
@@ -624,4 +620,73 @@ select#selectPlaylist {
     height: 8px;
     margin-bottom: 8px;
     background-color: #B8B8B8;
+}
+
+#footer
+{
+    width: 100%;
+    margin : 0;
+    padding : 10px 0px 0px 0px;
+    background-color: #FFFFFF;
+    height: 55px;
+    line-height: 50px;
+    color: #197D62;
+    float : bottom;
+    border-top: solid 5px #197D62;
+
+
+    position:fixed; /* permet de fixer le pied de page */ 
+    bottom:0; /* dire au pied de page que sa position et tout en bas */ 
+}
+
+#footer a{
+    text-decoration: none;
+    color: #197D62;
+}
+
+#catalogue
+{
+    min-height: 700px;
+       width: 48%;
+}
+
+#adminsec a {
+    text-decoration: none;
+    color: #6c6c6c;
+    margin: 0px 75px 0px 75px;
+    padding: 0px 0px 150px 0px; 
+
+}
+
+#adminsec li{
+    list-style-type: none;
+    display: inline-block;
+    height: 150px;
+vertical-align: bottom; 
+
+}
+
+#adminsec h2{
+    display: none;
+}
+
+#adminsec {
+    color: #FFFFFF;
+    width: 45%;
+    margin-left: 25%;
+    display: block;
+}
+
+#gestion{
+    background-size: 60%;
+    background-image: url(../images/utilisateur.svg);
+    background-repeat: no-repeat;
+    background-position: center; ;
+
+}
+
+#cata{
+    background-image: url(../images/cd.svg);
+    background-repeat: no-repeat;
+    background-position: center;
 }
