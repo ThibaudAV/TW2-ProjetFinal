@@ -132,7 +132,7 @@ section {
 
 section #c1 {
     display: inline-block;
-    width: 435px;
+    width: 30%;
     padding: 10px 5px 10px 5px;
     vertical-align: top;
 
@@ -140,12 +140,15 @@ section #c1 {
 
 section #c2 {
     display: inline-block;
-    width: 435px;
+    width: 65%  ;
     padding: 10px 5px 10px 5px;
     vertical-align: top;
 }
 
-section h2 {
+ h2 {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-weight: 300;
 }
 
 section#player {
@@ -689,4 +692,24 @@ vertical-align: bottom;
     background-image: url(../images/cd.svg);
     background-repeat: no-repeat;
     background-position: center;
+}
+
+#gUsers
+{
+    display: block;
+    padding-left: 28%
+}
+
+#gUsers li {
+    list-style-type: none;
+}
+
+#rchPlay
+{
+    display: block;
+}
+
+#Pmusique
+{
+    display: block;
 }

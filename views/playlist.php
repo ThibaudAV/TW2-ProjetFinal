@@ -1,4 +1,4 @@
-<section>
+<section id="rchPlay">
 	
 
 	<h2>Créer une playlist</h2>
@@ -8,7 +8,7 @@
 	</form>
 </section>
 
-<section>
+<section id="Pmusique">
 	<div id="dz-root"></div>
 <div id="c1">
 	<h2>Ajouter des musiques</h2>
