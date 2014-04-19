@@ -1,5 +1,5 @@
 
-<section>
+<section id="gUsers">
 <h2>Gestion des utilisateurs</h2>
 
 Liste des utilisateurs :
