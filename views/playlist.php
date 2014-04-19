@@ -3,7 +3,7 @@
 
 	<h2>Créer une playlist</h2>
 	<form method="POST" id="formAddPlaylist" action="addPlaylist">
-	Nom de la playliste : <input type="text" name="nomplayliste" id="">
+	Nom de la playlist : <input type="text" name="nomplayliste" id="">
 	<input type="submit" value="Ajouter">
 	</form>
 </section>
@@ -13,9 +13,9 @@
 <div id="c1">
 	<h2>Ajouter des musiques</h2>
 	<input type="text" class="form-field" id="search" onkeyup="search();" placeholder="Rechercher" autocomplete="off" />
-	<h3>Recherche dans les albums</h3>
+	<h3>Rechercher dans les albums</h3>
 	<div id="resultsAlbums"></div>
-	<h3>Recherche dans les tracks</h3>
+	<h3>Rechercher dans les tracks</h3>
 	<div id="resultsAlbumsTracks"></div>
 
 </div>

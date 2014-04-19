@@ -13,7 +13,7 @@
  <div id="slider-range-min"></div>
 
 	<h2>Cliquer sur play</h2>
-	<p class="artiste"> Ou ajoute des musiques</p>
+	<p class="artiste"> Ou ajouter des musiques</p>
 	<div id="progressbar" ></div>
 	
         <div id="chrono">/</div>
