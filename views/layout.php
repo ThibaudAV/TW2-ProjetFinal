@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<title><?php echo $title;
  ?></title>
-	<link id="MyCss" rel="stylesheet" type="text/css" href="media/css/<?php echo ($_COOKIE['changeCSS']) ? $_COOKIE['changeCSS'] : 'style.css' ; ?>">
+	<link id="MyCss" rel="stylesheet" type="text/css" href="media/css/<?php echo (ISSET($_COOKIE['changeCSS'])) ? $_COOKIE['changeCSS'] : 'style.css' ; ?>">
     <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
 
 
