@@ -90,7 +90,7 @@ Flight::route('POST /addPlaylist', function(){
     $db = new WebPlaylistDB();
 
     $rep = $db->setUserPlaylists($db->getUser()->ID,$request->data->nomplayliste);
-    Flight::redirect('/playlist');
+    Flight::redirect('playlist');
 });
 
 
