@@ -8,7 +8,7 @@ Projet LTW2
 * Activer les extensions `php_pdo_mysql`  
 * Ajouter la BDD  
 * Modifier `lib/WebPlaylistDB.class.php` avec vos identifiants mysql
-
+* Etre connecter a deezer
 
 ###Creation de la base de données
 Le fichier /db/WebRadioDB.sql permet de créer et remplir la base de données
