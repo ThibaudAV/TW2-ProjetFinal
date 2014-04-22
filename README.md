@@ -7,6 +7,7 @@ Projet LTW2
 * Pour PHP `>= 5.4` 
 * Activer les extensions `php_pdo_mysql`  
 * Ajouter la BDD  
+* Modifier `lib/WebPlaylistDB.class.php` avec vos identifiants mysql
 
 
 ###Creation de la base de données
