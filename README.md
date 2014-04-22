@@ -5,7 +5,9 @@ Projet LTW2
 
 ###Instructions
 Pour PHP `>= 5.4` 
+
 Activer les extensions `php_pdo_mysql`  
+
 Ajouter la BDD  
 
 
